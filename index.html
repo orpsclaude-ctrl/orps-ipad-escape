@@ -1,0 +1,1515 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>數位校園大逃脫</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+/* Layout: a petrol "mission console" header over a light classroom paper ground; each room is one framed scene card. Single light look by design. */
+:root{
+  --ink:#16323a; --ink-2:#4a6670; --petrol:#0f4c4a; --petrol-2:#13605d; --petrol-3:#1d7470;
+  --tang:#f28c38; --tang-ink:#a8520f; --paper:#f1f6f4; --card:#ffffff; --line:#d3e2de;
+  --mint:#d9ede7; --coral:#c7432f; --coral-bg:#fbe8e4; --good:#2f8f5b; --good-bg:#e2f4ea;
+  --k1:#f28c38; --k2:#3aa57a; --k3:#3b82c4; --k4:#8b6cc9; --k5:#e0a91c; --k6:#c49a1c;
+  --display:"Chiron GoRound TC","PingFang TC","Noto Sans TC",system-ui,sans-serif;
+  --body:"Noto Sans TC","PingFang TC","Heiti TC",system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
+  -webkit-text-size-adjust:100%;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--tang);outline-offset:2px}
+h1,h2,h3{font-family:var(--display);line-height:1.25;text-wrap:balance;margin:0}
+p{margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 24px;border-radius:14px;border:0;
+  background:var(--tang);color:#2b1606;font-family:var(--display);font-weight:700;font-size:18px;box-shadow:0 3px 0 #c56a1f;transition:transform .12s}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 #c56a1f}
+.btn[disabled]{background:#cfdcd9;color:#6c8086;box-shadow:none;cursor:not-allowed}
+.btn.ghost{background:var(--card);color:var(--petrol);box-shadow:inset 0 0 0 2px var(--line)}
+.btn.dark{background:var(--petrol);color:#fff;box-shadow:0 3px 0 #082d2c}
+.btn.big{min-height:64px;font-size:22px;padding:0 36px;border-radius:18px}
+.chip{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 18px;border-radius:999px;border:2px solid var(--line);background:var(--card);font-weight:700}
+.chip[aria-pressed="true"]{border-color:var(--petrol);background:var(--petrol);color:#fff}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--petrol);color:#fff}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:21;background:var(--petrol)}
+.top .wrap{display:flex;align-items:center;gap:12px;min-height:64px;flex-wrap:wrap;padding-block:8px}
+.brand{font-family:var(--display);font-weight:900;font-size:18px;letter-spacing:.04em;white-space:nowrap}
+.prog{flex:1;min-width:160px;display:flex;align-items:center;gap:10px}
+.prog small{font-size:14px;white-space:nowrap;opacity:.9}
+.bar{flex:1;height:10px;border-radius:99px;background:rgba(255,255,255,.18);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--tang);border-radius:99px;transition:width .5s}
+.tbtn{min-height:44px;min-width:44px;padding:0 12px;border-radius:12px;border:0;background:rgba(255,255,255,.12);color:#fff;font-size:15px;font-weight:700;display:inline-flex;align-items:center;gap:6px}
+.tbtn svg{width:20px;height:20px}
+
+main{padding-block:24px 48px}
+.card{background:var(--card);border-radius:20px;box-shadow:0 1px 0 var(--line),0 8px 24px rgba(15,76,74,.08)}
+.muted{color:var(--ink-2)}
+.eyebrow{font-size:14px;font-weight:700;letter-spacing:.12em;color:var(--tang-ink)}
+
+/* home */
+.home{min-height:100%;background:radial-gradient(120% 80% at 70% 0%,#1a6f6a 0%,var(--petrol) 45%,#0a3533 100%);color:#fff;display:flex;flex-direction:column}
+.home .wrap{flex:1;display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center;padding-block:40px}
+.alarm{display:inline-flex;align-items:center;gap:10px;background:rgba(199,67,47,.25);border:1px solid rgba(255,140,120,.5);color:#ffd9d1;border-radius:999px;padding:6px 16px;font-weight:700}
+.alarm b{width:10px;height:10px;border-radius:50%;background:#ff6b55;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.2}}
+.home h1{font-size:clamp(34px,5.4vw,58px);font-weight:900;margin:18px 0 8px}
+.home h1 span{color:var(--tang)}
+.lines{display:grid;gap:6px;margin:18px 0 28px;font-size:20px}
+.lines p{animation:rise .6s both}
+.lines p:nth-child(2){animation-delay:.5s}.lines p:nth-child(3){animation-delay:1s}
+@keyframes rise{from{opacity:.0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.home .meta{margin-top:20px;font-size:15px;opacity:.8}
+.scene{position:relative;aspect-ratio:1/1;max-width:100%}
+.scene svg{width:100%;height:auto;display:block}
+.homebtns{display:flex;gap:12px;flex-wrap:wrap}
+
+/* register */
+.form{max-width:640px;margin:0 auto;padding:28px;display:grid;gap:22px}
+.field{display:grid;gap:10px}
+.field label,.field .lab{font-weight:700;font-size:17px}
+.field input[type=text]{min-height:54px;border-radius:14px;border:2px solid var(--line);padding:0 16px;font-size:18px;background:#fff;color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.note{font-size:14px;color:var(--ink-2)}
+
+/* map */
+.maphead{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.maphead h2{font-size:30px}
+.rooms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;position:relative}
+.room{position:relative;text-align:left;border:0;padding:20px;display:grid;gap:10px;min-height:190px;align-content:start}
+.room .ico{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;color:#fff}
+.room .ico svg{width:30px;height:30px}
+.room h3{font-size:21px}
+.room .sub{font-size:14px;color:var(--ink-2)}
+.room .state{position:absolute;top:18px;right:18px;font-size:13px;font-weight:700;border-radius:99px;padding:4px 12px}
+.room.locked{background:#e6eeec;box-shadow:none;cursor:not-allowed}
+.room.locked .ico{background:#a9bcb8!important}
+.room.locked h3,.room.locked .sub{color:#7b8f94}
+.room.current{box-shadow:0 0 0 3px var(--tang),0 8px 24px rgba(242,140,56,.25);animation:breathe 2.4s ease-in-out infinite}
+@keyframes breathe{50%{box-shadow:0 0 0 6px rgba(242,140,56,.35),0 8px 24px rgba(242,140,56,.25)}}
+.st-cur{background:#fde9d6;color:var(--tang-ink)} .st-done{background:var(--good-bg);color:var(--good)} .st-lock{background:#d6e1de;color:#5f7479}
+.keyline{display:flex;align-items:center;gap:8px;font-weight:700}
+.keyline svg{width:34px;height:34px}
+
+/* level */
+.lvtop{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.lvtop h2{font-size:28px;flex:1;min-width:200px}
+.story{padding:18px 22px;border-radius:16px;background:var(--petrol);color:#e9f6f3;font-size:18px;margin-bottom:18px;display:flex;gap:14px;align-items:center}
+.story svg{flex:none;width:40px;height:40px;color:var(--tang)}
+.panel{padding:24px;display:grid;gap:16px}
+.step{display:flex;align-items:center;gap:12px}
+.step .n{flex:none;width:36px;height:36px;border-radius:50%;background:var(--petrol);color:#fff;display:grid;place-items:center;font-weight:700;font-family:var(--display)}
+.step.done .n{background:var(--good)}
+.step h3{font-size:20px}
+.fb{min-height:28px;font-weight:700;border-radius:12px;padding:10px 14px;display:none}
+.fb.show{display:block}
+.fb.bad{background:var(--coral-bg);color:var(--coral)}
+.fb.ok{background:var(--good-bg);color:var(--good)}
+.fb.info{background:var(--mint);color:var(--petrol)}
+.real{border:2px dashed var(--tang);border-radius:16px;padding:18px;background:#fff8f1;display:grid;gap:12px}
+.real .tag{font-family:var(--display);font-weight:700;color:var(--tang-ink)}
+.check{display:flex;align-items:center;gap:12px;min-height:52px;padding:8px 14px;border-radius:12px;background:#fff;border:2px solid var(--line);font-weight:700;text-align:left}
+.check i{flex:none;width:28px;height:28px;border-radius:8px;border:2px solid var(--ink-2);display:grid;place-items:center}
+.check[aria-pressed="true"]{border-color:var(--good);background:var(--good-bg)}
+.check[aria-pressed="true"] i{background:var(--good);border-color:var(--good)}
+.check[aria-pressed="true"] i::after{content:"";width:10px;height:6px;border:3px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+.firsttip{display:flex;gap:12px;align-items:flex-start;background:#eef7ff;border-radius:14px;padding:14px 16px;color:#1d4f7a;font-weight:500}
+.firsttip b{font-family:var(--display);flex:none;white-space:nowrap}
+.codein{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.codein input{min-height:56px;width:150px;border-radius:14px;border:2px solid var(--line);font-size:26px;text-align:center;font-family:var(--display);font-weight:700;letter-spacing:.2em;font-variant-numeric:tabular-nums;color:var(--ink)}
+.codein input.wide{width:220px}
+.done-banner{display:flex;gap:10px;align-items:center;color:var(--good);font-weight:700}
+
+/* L1 */
+.ipadsvg{width:100%;max-width:340px;margin:0 auto;display:block;user-select:none;-webkit-user-select:none}
+.ipadsvg .hot{fill:transparent;cursor:pointer}
+.ipadsvg .part{fill:#6d7f88;transition:fill .2s}
+.ipadsvg .part.lit{fill:var(--tang)}
+.ipadsvg text{font-family:var(--body);font-size:13px;font-weight:700;fill:var(--tang-ink)}
+.ask{font-family:var(--display);font-size:22px;font-weight:700;color:var(--petrol)}
+.match{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.match .col{display:grid;gap:10px;align-content:start}
+.mcard{min-height:60px;border-radius:14px;border:2px solid var(--line);background:#fff;padding:10px 14px;font-weight:700;text-align:left}
+.mcard[aria-pressed="true"]{border-color:var(--tang);background:#fff3e8}
+.mcard.ok{border-color:var(--good);background:var(--good-bg);color:var(--good)}
+
+/* L2 */
+.gates{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.gate{border-radius:12px;padding:10px 6px;text-align:center;background:#e3ecea;font-size:14px;font-weight:700;color:#5f7479;display:grid;gap:4px;justify-items:center}
+.gate svg{width:26px;height:26px}
+.gate.now{background:#fde9d6;color:var(--tang-ink);box-shadow:inset 0 0 0 2px var(--tang)}
+.gate.ok{background:var(--good-bg);color:var(--good)}
+.stage{min-height:300px;border-radius:18px;background:linear-gradient(#1f5d59,#13403e);display:grid;place-items:center;padding:24px;color:#fff;position:relative;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.door{width:200px;height:240px;border-radius:100px 100px 12px 12px;background:#7a4c2a;border:6px solid #4a2b14;position:relative;box-shadow:inset 0 0 0 10px #8b5a34}
+.door::after{content:"";position:absolute;right:28px;top:50%;width:22px;height:22px;border-radius:50%;background:var(--tang);box-shadow:0 0 0 4px #ffd2a8}
+.door.open{transform:perspective(600px) rotateY(-70deg);transform-origin:left;transition:transform .7s}
+.lever{width:150px;height:150px;border-radius:50%;border:0;display:grid;place-items:center;background:conic-gradient(var(--tang) calc(var(--p,0)*1%),rgba(255,255,255,.18) 0);touch-action:none;-webkit-touch-callout:none}
+.lever span{width:118px;height:118px;border-radius:50%;background:#13403e;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:20px;color:#fff}
+.track{position:relative;width:min(100%,520px);height:90px;border-radius:20px;background:rgba(255,255,255,.12);touch-action:none}
+.track .slot{position:absolute;right:8px;top:8px;bottom:8px;width:90px;border-radius:14px;border:3px dashed rgba(255,255,255,.5)}
+.stone{position:absolute;left:8px;top:8px;width:90px;height:74px;border-radius:14px;background:#a7b5b1;box-shadow:inset 0 -6px 0 #7d8d89;display:grid;place-items:center;color:#2c3a3d;font-weight:900;font-size:28px;touch-action:none}
+.mapbox{width:100%;height:340px;border-radius:16px;overflow:hidden;background:#f6efd8;position:relative;touch-action:none}
+.mapin{position:absolute;inset:0;transform-origin:0 0;will-change:transform}
+.mapin svg{width:100%;height:100%;display:block}
+.zoomtag{position:absolute;left:10px;top:10px;background:rgba(15,76,74,.85);color:#fff;border-radius:99px;padding:4px 12px;font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;pointer-events:none}
+.zoombtns{position:absolute;right:10px;top:10px;display:flex;gap:8px}
+.zoombtns button{width:48px;height:48px;border-radius:12px;border:0;background:#fff;font-size:24px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+
+/* L3 */
+.ccwrap{border-radius:22px;background:linear-gradient(135deg,#5e7480,#3b4e58);padding:22px;position:relative;overflow:hidden}
+.ccwrap .siren{position:absolute;inset:0;background:radial-gradient(circle at 50% 0,rgba(255,70,50,.55),transparent 70%);pointer-events:none;animation:siren 1.2s infinite}
+.ccwrap.calm .siren{display:none}
+@keyframes siren{50%{opacity:.25}}
+.cc{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;max-width:420px;margin:0 auto}
+.conn{grid-column:span 2;grid-row:span 2;background:rgba(20,30,36,.55);border-radius:24px;padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cbtn{aspect-ratio:1;border-radius:50%;border:0;display:grid;place-items:center;background:rgba(255,255,255,.22);color:#fff}
+.cbtn svg{width:46%;height:46%}
+.cbtn.on{background:#2f80ed}
+.cbtn.air.on{background:var(--tang)}
+.tile{aspect-ratio:1;border-radius:20px;border:0;background:rgba(20,30,36,.55);display:grid;place-items:center;color:#fff}
+.tile svg{width:46%;height:46%}
+.tile.lockon{background:#fff;color:var(--coral)}
+.vslider{grid-row:span 2;border-radius:20px;background:rgba(20,30,36,.55);position:relative;overflow:hidden;touch-action:none;min-height:150px}
+.vslider .fill{position:absolute;left:0;right:0;bottom:0;background:#fff}
+.vslider svg{position:absolute;left:50%;bottom:12px;width:28px;height:28px;transform:translateX(-50%);color:#3b4e58}
+.vslider .pct{position:absolute;left:0;right:0;top:8px;text-align:center;font-weight:700;font-size:14px;color:#fff;mix-blend-mode:difference}
+.media{grid-column:span 4;border-radius:20px;background:rgba(20,30,36,.55);color:#cfdbe0;padding:14px 18px;font-size:15px}
+.tasks{display:grid;gap:8px}
+.task{display:flex;gap:10px;align-items:center;font-weight:700;color:var(--ink-2)}
+.task i{flex:none;width:24px;height:24px;border-radius:50%;border:2px solid var(--line)}
+.task.ok{color:var(--good)} .task.ok i{background:var(--good);border-color:var(--good)}
+.mini{width:100%;max-width:300px;display:block;margin:0 auto}
+.mini .z{fill:rgba(242,140,56,.12);stroke:var(--tang);stroke-width:2;stroke-dasharray:5 4;cursor:pointer}
+.mini .z.pick{fill:rgba(47,143,91,.3);stroke:var(--good);stroke-dasharray:none}
+.icons4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.icons4 button{aspect-ratio:1;border-radius:18px;border:2px solid var(--line);background:#fff;display:grid;place-items:center;color:var(--ink)}
+.icons4 button svg{width:52%;height:52%}
+.icons4 button.ok{border-color:var(--good);background:var(--good-bg);color:var(--good)}
+
+/* L4 */
+.secret{position:fixed;inset:0;z-index:60;background:rgba(10,30,30,.9);display:grid;place-items:center;padding:16px}
+.docpaper{width:min(560px,100%);background:#fffdf6;border-radius:12px;padding:22px;color:#2a2a2a;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.docpaper h3{font-family:var(--body);font-size:18px;display:flex;justify-content:space-between}
+.grid9{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.cell{aspect-ratio:1;border:1.5px solid #c8c2b0;border-radius:8px;position:relative;display:grid;place-items:center}
+.cell svg{width:58%;height:58%}
+.cell em{position:absolute;right:6px;bottom:3px;font-style:normal;font-size:11px;color:#555;font-weight:700}
+.timer{height:8px;border-radius:99px;background:#e2ddcc;margin-top:14px;overflow:hidden}
+.timer i{display:block;height:100%;background:var(--coral);transform-origin:left}
+
+/* L5 */
+.dict input{width:100%;min-height:58px;border-radius:14px;border:2px solid var(--line);padding:0 16px;font-size:20px;color:var(--ink)}
+.diff{font-size:22px;letter-spacing:.1em;font-family:var(--display)}
+.diff .x{color:var(--coral);text-decoration:underline wavy}
+.board{width:100%;height:320px;border-radius:16px;background:#fff;border:2px solid var(--line);touch-action:none;display:block;cursor:crosshair}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.sw{width:48px;height:48px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px var(--line)}
+.sw[aria-pressed="true"]{box-shadow:0 0 0 3px var(--ink)}
+.sz{min-width:56px}
+.sz[aria-pressed="true"]{border-color:var(--petrol);background:var(--mint);color:var(--petrol)}
+.path{background:var(--mint);color:var(--petrol);font-weight:700;border-radius:12px;padding:10px 14px}
+
+/* L6 */
+textarea{width:100%;min-height:96px;border-radius:14px;border:2px solid var(--line);padding:12px 16px;font-size:18px;font-family:var(--body);color:var(--ink);resize:vertical}
+.pack{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.kslot{border-radius:14px;background:#f5f8f7;border:2px solid var(--line);padding:10px;display:flex;align-items:center;gap:10px}
+.kslot svg{width:36px;height:36px;flex:none}
+.kslot b{font-family:var(--display);font-size:24px;font-variant-numeric:tabular-nums}
+.kslot small{display:block;font-size:13px;color:var(--ink-2)}
+.kslot.off{opacity:.45}
+.lockrow{display:flex;gap:8px;justify-content:center}
+.lockrow label{display:grid;gap:4px;justify-items:center;font-size:13px;font-weight:700;color:var(--ink-2)}
+.lockrow input{width:58px;height:66px;border-radius:12px;border:2px solid var(--line);text-align:center;font-size:30px;font-family:var(--display);font-weight:700;color:var(--ink)}
+.linkcard{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:16px;background:var(--petrol);color:#fff;text-decoration:none;font-family:var(--display);font-weight:700;font-size:20px;min-height:64px}
+.linkcard svg{width:28px;height:28px;flex:none}
+
+
+/* L3 phase 2: settings mock + AirDrop */
+.settings{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);border-radius:18px;overflow:hidden;border:2px solid var(--line);background:#f2f2f7;min-height:330px}
+.side{background:#fff;border-right:1px solid #e3e6ea;padding:12px;display:grid;gap:4px;align-content:start}
+.sttl{font-family:var(--display);font-size:22px;font-weight:700;padding:4px 8px 8px}
+.srow{display:flex;align-items:center;gap:10px;min-height:48px;border:0;background:none;border-radius:10px;padding:0 10px;text-align:left;font-weight:500}
+.srow em{margin-left:auto;font-style:normal;font-size:14px;color:var(--ink-2)}
+.srow.sel{background:#2f80ed;color:#fff}.srow.sel em{color:#e6efff}
+.sico{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:#fff;flex:none}
+.sico svg{width:18px;height:18px}
+.smain{padding:16px;display:grid;gap:14px;align-content:start;min-width:0}
+.sempty{color:var(--ink-2);padding:40px 12px;text-align:center}
+.shead{display:flex;align-items:center;gap:8px;font-family:var(--display);font-weight:700;font-size:20px;min-height:44px}
+.sback{border:0;background:none;color:#2f80ed;font-weight:700;min-height:44px;padding:0 6px;font-family:var(--body)}
+.sgroup{background:#fff;border-radius:12px;overflow:hidden}
+.sitem{display:flex;align-items:center;gap:10px;width:100%;min-height:52px;border:0;border-bottom:1px solid #eceef1;background:#fff;padding:0 14px;text-align:left;font-size:16px}
+.sitem:last-child{border-bottom:0}
+.sitem em{margin-left:auto;font-style:normal;color:var(--ink-2);font-size:15px}
+.sitem em + .chev{margin-left:6px}
+.sitem .chev{margin-left:auto;color:#b0b6bd;font-size:22px}
+.sitem .tick{margin-left:auto;color:#2f80ed;font-weight:900;font-size:20px}
+.scap{font-size:13px;color:var(--ink-2);padding:0 6px}
+.adcard{border-radius:18px;background:linear-gradient(135deg,#3b82c4,#1d4f7a);color:#fff;padding:20px;display:grid;gap:4px;text-align:center}
+.adcard b{font-family:var(--display);font-size:56px;letter-spacing:.2em;font-variant-numeric:tabular-nums;line-height:1.2}
+.olist{margin:0;padding-left:1.3em;display:grid;gap:6px}
+@media (max-width:600px){.settings{grid-template-columns:1fr}.side{border-right:0;border-bottom:1px solid #e3e6ea}}
+
+
+/* feedback v4 */
+.penfig{margin:0;background:#fff8f1;border:2px dashed var(--tang);border-radius:14px;padding:12px;display:grid;gap:6px}
+.penfig svg{width:100%;height:auto}
+.penfig figcaption{font-size:15px;line-height:1.55}
+.penfig figcaption b{display:block;font-family:var(--display);color:var(--tang-ink);font-size:17px}
+button.linkcard{border:0;width:100%;text-align:left;cursor:pointer}
+.libview{position:fixed;inset:0;z-index:65;background:#f7faf9;display:flex;flex-direction:column}
+.libbar{display:flex;align-items:center;gap:12px;padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));padding-top:calc(10px + env(safe-area-inset-top,0px));background:#e9eef0;border-bottom:1px solid var(--line)}
+.libbar .url{flex:1;min-width:0;display:flex;align-items:center;gap:8px;background:#fff;border-radius:12px;min-height:44px;padding:0 14px;color:var(--ink-2);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.libbar .url svg{width:16px;height:16px;flex:none}
+.libbar .btn{min-height:44px}
+.libbody{flex:1;overflow:auto;-webkit-overflow-scrolling:touch}
+.libinner{max-width:720px;margin:0 auto;padding:24px max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px));display:grid;gap:18px;font-size:18px;line-height:1.75}
+.libinner h2{font-size:32px;color:var(--petrol)}
+.lkicker{font-size:14px;font-weight:700;letter-spacing:.08em;color:var(--tang-ink)}
+.libinner article{background:#fff;border-radius:18px;padding:22px;box-shadow:0 1px 0 var(--line);position:relative;display:grid;gap:8px}
+.libinner article h3{font-size:22px;color:var(--petrol)}
+.libinner article ol{margin:0;padding-left:1.4em}
+.ltag{justify-self:start;font-size:13px;font-weight:700;color:var(--tang-ink);background:#fde9d6;border-radius:99px;padding:2px 10px}
+.lfile{background:#fff4e0!important;border:2px dashed var(--tang)}
+.lfile h3{color:var(--tang-ink)!important}
+.lstamp{position:absolute;right:18px;top:18px;transform:rotate(8deg);border:3px solid #c7432f;color:#c7432f;font-weight:900;font-family:var(--display);padding:2px 10px;border-radius:8px;font-size:15px}
+.lpoem{font-family:var(--display);font-size:24px;line-height:1.9}
+.lnote{font-size:15px;color:var(--ink-2)}
+#libclose2{justify-self:start}
+/* feedback v3 */
+#fx{position:fixed;inset:0;pointer-events:none;z-index:90}
+.toast{position:absolute;left:50%;top:calc(env(safe-area-inset-top,0px) + 84px);transform:translateX(-50%);background:var(--good);color:#fff;font-family:var(--display);font-weight:700;font-size:24px;padding:12px 28px;border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,.25);display:flex;gap:10px;align-items:center;white-space:nowrap;animation:pop .45s cubic-bezier(.2,1.5,.4,1) both}
+.toast svg{width:26px;height:26px;color:#ffe08a}
+@keyframes pop{from{transform:translateX(-50%) scale(.5);opacity:0}}
+#fx .spark{position:absolute}
+.guide{padding:18px 22px;margin-bottom:18px;display:grid;gap:12px}
+.guide .ask{font-size:20px}
+.subs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.subitem{display:flex;gap:12px;align-items:flex-start;background:#f5f8f7;border-radius:14px;padding:12px 14px;border:2px solid var(--line)}
+.subitem b{display:block;font-family:var(--display);color:var(--petrol)}
+.subitem .sn{flex:none;width:32px;height:32px;border-radius:50%;background:var(--petrol);color:#fff;display:grid;place-items:center;font-weight:700;font-family:var(--display)}
+.subitem.ok{border-color:var(--good);background:var(--good-bg)}
+.subitem.ok .sn{background:var(--good)}
+.colh{font-size:14px;font-weight:700;color:var(--ink-2);letter-spacing:.1em}
+.meaning{display:flex;gap:14px;align-items:flex-start;background:#eef7ff;border-radius:14px;padding:14px 16px;color:#1d4f7a}
+.meaning svg{flex:none;width:34px;height:34px}
+.meaning b{font-family:var(--display);font-size:18px}
+.meaning p{margin-top:2px}
+.ways{display:grid;gap:10px}
+.ways>div{background:#fff;border-radius:12px;padding:10px 14px;border:1px solid #f3d3b5}
+.ways b{font-family:var(--display);color:var(--tang-ink)}
+.pwr{position:absolute;right:14px;top:14px;width:46px;height:46px;border-radius:50%;border:0;background:rgba(20,30,36,.55);color:#fff;display:grid;place-items:center;z-index:2}
+.pwr svg{width:24px;height:24px}
+.pwr.lit{background:#fff;color:var(--coral)}
+.ccwrap{padding-top:70px}
+.pwroff{position:absolute;inset:0;z-index:3;background:rgba(10,20,24,.82);display:grid;place-items:center;align-content:center;gap:18px;padding:16px}
+.pwroff .slide{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.18);color:#fff;border-radius:999px;padding:6px 26px 6px 6px;font-weight:700;font-size:18px}
+.pwroff .slide span{width:48px;height:48px;border-radius:50%;background:#fff;color:var(--coral);display:grid;place-items:center}
+.pwroff .slide svg{width:26px;height:26px}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px 14px;background:#f5f8f7;border-radius:14px;padding:14px}
+.legend .lh{grid-column:1/-1;font-family:var(--display);font-weight:700;color:var(--petrol)}
+.lg{display:flex;gap:10px;align-items:flex-start}
+.lg svg{flex:none;width:28px;height:28px;padding:5px;border-radius:8px;background:#3b4e58;color:#fff}
+.lg b{display:block;font-size:15px}
+.lg span{font-size:14px;color:var(--ink-2);line-height:1.45;display:block}
+.dochead{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.dochead b{font-size:19px;display:block}
+.dochead small{font-size:12px;color:#666}
+.docno{border:2px solid #c7432f;border-radius:10px;padding:4px 12px;text-align:center;color:#c7432f}
+.docno b{font-family:var(--display);font-size:24px;letter-spacing:.12em;font-variant-numeric:tabular-nums}
+.docclue{margin-top:10px;background:#fff1c9;border-radius:8px;padding:6px 10px;font-weight:700;font-size:15px;color:#5a4426}
+.cell em{right:5px;bottom:4px;font-size:16px;background:#2a2a2a;color:#fff;border-radius:6px;min-width:22px;height:22px;display:grid;place-items:center;padding:0 4px}
+.spell{display:inline-block;justify-self:start;background:var(--petrol);color:#fff;font-family:var(--display);font-size:clamp(24px,3.4vw,34px);font-weight:700;letter-spacing:.12em;padding:10px 22px;border-radius:14px;box-shadow:0 0 0 4px #ffe08a}
+.micfig{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.micfig figure{margin:0;background:#f5f8f7;border-radius:14px;padding:10px;display:grid;gap:6px}
+.micfig svg{width:100%;height:auto}
+.micfig figcaption{font-size:14px;color:var(--ink-2);line-height:1.5}
+.micfig figcaption b{display:block;color:var(--ink);font-size:15px}
+.pulse{animation:pulse 1.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{50%{opacity:.35;transform:scale(1.15)}}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:50;background:rgba(8,32,31,.55);display:grid;place-items:center;padding:16px}
+.sheet{width:min(560px,100%);max-height:88vh;overflow:auto;padding:26px;display:grid;gap:16px}
+.sheet h3{font-size:24px}
+.hint{border-radius:14px;padding:14px 16px;background:#f3f8f7;border-left:0}
+.hint b{display:block;font-family:var(--display);color:var(--petrol);margin-bottom:4px}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+
+/* reward */
+.reward{position:fixed;inset:0;z-index:70;background:radial-gradient(circle,#1a6f6a,#082e2d);display:grid;place-items:center;color:#fff;text-align:center;padding:24px}
+.reward .bigkey{width:180px;height:180px;margin:0 auto;animation:spin 1.2s cubic-bezier(.2,.8,.2,1) both}
+@keyframes spin{from{transform:rotate(-200deg) scale(.2);opacity:0}to{transform:none;opacity:1}}
+.reward h2{font-size:34px;margin-top:10px}
+.reward .digit{display:inline-grid;place-items:center;width:84px;height:84px;border-radius:20px;background:#fff;color:var(--petrol);font-family:var(--display);font-weight:900;font-size:52px;margin:14px 0;animation:rise .5s .8s both}
+.spark{position:absolute;width:10px;height:10px;border-radius:2px;animation:fall 1.6s ease-out forwards}
+@keyframes fall{from{transform:translate(0,0) rotate(0)}to{transform:translate(var(--dx),var(--dy)) rotate(540deg);opacity:0}}
+
+/* cert */
+.certbox{padding:24px;display:grid;gap:16px;justify-items:center;text-align:center}
+.certbox img{width:100%;max-width:900px;border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.15);-webkit-touch-callout:default}
+
+@media (max-width:820px){
+  .home .wrap{grid-template-columns:1fr}
+  .scene{max-width:320px;margin:0 auto}
+  .rooms{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .two{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .rooms{grid-template-columns:1fr}
+  .gates{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .gate span{display:none}
+  .pack{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .match{grid-template-columns:1fr}
+  .lockrow input{width:50px}
+  .brand{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div id="app"></div>
+<div id="layer"></div>
+<div id="fx" aria-hidden="true"></div>
+
+<script>
+(() => {
+'use strict';
+const KEY = 'orps-escape-v1';
+let storageOK = true;
+const store = {
+  get(){ try{ return JSON.parse(localStorage.getItem(KEY)); }catch(e){ storageOK=false; return null; } },
+  set(v){ try{ localStorage.setItem(KEY, JSON.stringify(v)); storageOK=true; }catch(e){ storageOK=false; } },
+  clear(){ try{ localStorage.removeItem(KEY); }catch(e){} }
+};
+const fresh = () => ({v:2, name:'', grade:'', first:'', sound:true, done:[], lv:{}, hints:{}, finishedAt:null, screen:'home', cur:1});
+let S = Object.assign(fresh(), store.get() || {});
+if((S.v||1) < 2){ S.sound = true; S.v = 2; }
+const save = () => store.set(S);
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const lv = n => (S.lv[n] = S.lv[n] || {});
+const app = $('#app'), layer = $('#layer');
+
+/* ---------- icons ---------- */
+const I = {
+  bolt:'<path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="currentColor"/>',
+  hand:'<path d="M9 12V5.5a1.5 1.5 0 0 1 3 0V11m0-1.5a1.5 1.5 0 0 1 3 0V11m0-.5a1.5 1.5 0 0 1 3 0v3.5a6.5 6.5 0 0 1-6.5 6.5h-.4a6 6 0 0 1-5-2.7L3.7 14a1.5 1.5 0 0 1 2.5-1.7L9 15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+  sliders:'<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4v16M12 4v16M18 4v16"/><circle cx="6" cy="9" r="2.2" fill="currentColor"/><circle cx="12" cy="15" r="2.2" fill="currentColor"/><circle cx="18" cy="7" r="2.2" fill="currentColor"/></g>',
+  doc:'<g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></g>',
+  pen:'<g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 20l1-4L16 5l3 3L8 19z"/><path d="M14 7l3 3"/></g>',
+  core:'<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.3 6L12 16.8 6.6 19.4l1.3-6L3.4 9.3l6-.7z" fill="currentColor"/>',
+  lock:'<g fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></g>',
+  sound:'<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/></g>',
+  mute:'<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M17 9l5 6M22 9l-5 6"/></g>',
+  gear:'<g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></g>',
+  bag:'<g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></g>',
+  back:'<path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>',
+  help:'<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></g>',
+  plane:'<path d="M21 15v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V8l-8 5v2l8-2.5V18l-2 1.5V21l3.5-1 3.5 1v-1.5L13 18v-5.5z" fill="currentColor"/>',
+  wifi:'<g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2.5 9a14 14 0 0 1 19 0M5.5 12.5a9.5 9.5 0 0 1 13 0M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1.3" fill="currentColor"/></g>',
+  bt:'<path d="M7 7l10 10-5 4V3l5 4L7 17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>',
+  share:'<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M5.6 5.6a9 9 0 0 0 0 12.8M18.4 5.6a9 9 0 0 1 0 12.8"/></g>',
+  rotlock:'<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19.5 12A7.5 7.5 0 1 1 15 5.1"/><path d="M15 2.5v3h3"/><rect x="9" y="11" width="6" height="5" rx="1" fill="currentColor"/><path d="M10.2 11V9.8a1.8 1.8 0 0 1 3.6 0V11"/></g>',
+  moon:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="currentColor"/>',
+  sun:'<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g>',
+  vol:'<path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/>',
+  padlock:'<g fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></g>',
+  ext:'<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></g>',
+  tap:'<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="9" r="3"/><path d="M12 14v7M7 4.5a7 7 0 0 1 10 0"/></g>',
+  press:'<g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4" fill="currentColor"/><circle cx="12" cy="12" r="8.5" stroke-dasharray="3 3"/></g>',
+  swipe:'<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/></g>',
+  pinch:'<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l6 6M20 20l-6-6M4 4v5M4 4h5M20 20v-5M20 20h-5"/></g>',
+  power:'<g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 3v8"/><path d="M6.3 6.8a8 8 0 1 0 11.4 0"/></g>',
+  appsw:'<g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="6" width="8" height="12" rx="2"/><rect x="13" y="6" width="8" height="12" rx="2"/></g>'
+};
+const svg = (name, extra='') => `<svg viewBox="0 0 24 24" aria-hidden="true" ${extra}>${I[name]}</svg>`;
+const keySvg = (color, cls='') => `<svg class="${cls}" viewBox="0 0 64 64" aria-hidden="true"><circle cx="20" cy="32" r="13" fill="${color}"/><circle cx="20" cy="32" r="5.5" fill="#fff"/><rect x="31" y="28" width="28" height="8" rx="3" fill="${color}"/><rect x="47" y="34" width="6" height="10" rx="2" fill="${color}"/><rect x="39" y="34" width="5" height="7" rx="2" fill="${color}"/></svg>`;
+
+/* ---------- data ---------- */
+const L = [
+  null,
+  {n:1, name:'電力啟動室', key:'電力之鑰', color:'var(--k1)', hex:'#f28c38', digit:4, min:6, icon:'bolt', story:'數位校園的能源核心停止運作，請找出正確的按鈕重新供電！'},
+  {n:2, name:'手勢迷宮', key:'手勢之鑰', color:'var(--k2)', hex:'#3aa57a', digit:7, min:8, icon:'hand', story:'前方的迷宮無法使用滑鼠，必須用手勢才能打開通道！'},
+  {n:3, name:'神秘控制室', key:'控制之鑰', color:'var(--k3)', hex:'#3b82c4', digit:2, min:8, icon:'sliders', story:'校園控制室警報大作，只有找到正確的控制開關才能解除！'},
+  {n:4, name:'消失的秘密文件', key:'影像之鑰', color:'var(--k4)', hex:'#8b6cc9', digit:9, min:10, icon:'doc', story:'重要的教學文件只會出現短短幾秒！先用截圖保存線索，再打開 AirDrop 傳送門，把截圖送給夥伴！'},
+  {n:5, name:'魔法文字研究室', key:'創作之鑰', color:'var(--k5)', hex:'#e0a91c', digit:5, min:10, icon:'pen', story:'魔法文字被封印了，必須使用聲音和觸控筆才能解除！'},
+  {n:6, name:'數位校園核心', key:'教學之鑰', color:'var(--k6)', hex:'#c49a1c', digit:null, min:9, icon:'core', story:'恭喜你找到五把金鑰！最後一把金鑰就在數位校園的核心教室！'}
+];
+const HINTS = {
+  1:['第一關有兩個小關：左邊在 iPad 圖上點出按鈕，右邊玩配對遊戲。iPad（A16）沒有 Home 鍵，最重要的按鈕在機身上緣。',
+     '直拿 iPad 時，音量鍵在右側上方；USB-C 充電孔在下緣中央。配對遊戲先點左欄的「操作」，再點右欄的「結果」。',
+     '上緣右側＝頂端按鈕（也是 Touch ID）；右側上方兩顆＝音量鍵；下緣中央＝USB-C。短按頂端按鈕＝鎖定／喚醒；按住頂端按鈕＋音量鍵＝出現關機滑桿；同時快按快放＝截圖。音量任務：按「播放音樂」，再按音量鍵，螢幕上的音量指示往下降、音樂變小聲就對了。'],
+  2:['每道門上方的小圖示，就是要使用的手勢；下方的說明告訴你這個手勢在 iPad 上代表什麼。',
+     '長按時手指不要移動；石塊要一路按住滑到虛線框。藏寶圖用兩根手指同時張開放大，找到圖書館旁的小紙條。',
+     '藏寶圖密碼寫在圖書館右下角的小紙條上，放大到 3 倍左右就看得到。離開挑戰：從最底邊輕輕往上滑一小段，會出現 Dock，點「照片」；再用同樣方法叫出 Dock 點 Safari 回來。滑長一點會回主畫面，滑到中間停住會出現 App 切換器，都可以。'],
+  3:['在真正的 iPad 上，控制中心要從螢幕的「右上角」往下滑，不是中間。',
+     '旋轉鎖定是「鎖頭外面繞一圈箭頭」；亮度是太陽長條；電源按鈕在控制中心最右上角。',
+     '點 Wi-Fi、藍牙讓它們亮起；點一下飛航了解即可；點鎖頭加圓箭頭；把太陽長條拖到 50% 左右；點右上角電源鈕後按「取消」。觀察題答案：右上角；鎖頭加圓箭頭。iPadOS 26 的控制中心可以自訂，排列以實機為準。'],
+  4:['文件只出現幾秒，想想有什麼方法可以把畫面「拍」下來。小關二還要用 AirDrop 把截圖傳給夥伴。',
+     '同時快按頂端按鈕＋音量鍵就能截圖。開鎖密碼就是「貓頭鷹」右下方那一格裡的數字。AirDrop 在「設定 › 一般 › AirDrop」。',
+     '開啟文件 → 立刻截圖 → 點縮圖 → 圈出貓頭鷹右下方那一格 → 完成 → 儲存到照片 → 輸入那一格的數字。小關二：模擬設定點「一般」→「AirDrop」→「所有人（10 分鐘）」；真的 iPad 也照做，再從「照片」分享截圖 → AirDrop → 點夥伴的 iPad。夥伴截圖最上方有他的「文件編號」，輸入它就過關。選項是灰色或找不到，點「找不到 AirDrop」按鈕。'],
+  5:['麥克風鍵在 iPad 鍵盤的下排；說話時面向 iPad 上方，手不要擋住機身上的收音小孔。',
+     '鍵盤要切到中文（臺灣）。沒有麥克風鍵，代表聽寫未開啟或受學校管理限制。觸控筆沒反應時，點按觸控筆頭兩下開機。',
+     '設定 › 一般 › 鍵盤 › 啟用聽寫 → 回到遊戲點輸入框 → 點麥克風 → 說「科技讓教學更有趣」→ 再點一次麥克風結束。若聽寫無法開啟，直接打字也可以過關。觸控筆：點按觸控筆頭兩下開啟電源，再寫 AI；也可以用手指寫。'],
+  6:['答案藏在「教學資料館」網頁裡，不在遊戲畫面上。',
+     '資料館往下捲，找標題有「特務檔案」的那一段；看完後點「回到遊戲」，或點 Safari 上方的遊戲分頁回來。',
+     '口訣的順序是：控制 → 電力 → 創作 → 影像 → 手勢。打開金鑰背包看每把金鑰的數字，依這個順序輸入。']
+};
+
+/* ---------- sound + celebration ---------- */
+let actx = null, musicTimer = null;
+function ac(){
+  try{ actx = actx || new (window.AudioContext||window.webkitAudioContext)(); if(actx.state === 'suspended') actx.resume(); return actx; }catch(e){ return null; }
+}
+function tone(c, f, t0, dur, type='triangle', vol=.18){
+  const o = c.createOscillator(), g = c.createGain();
+  o.type = type; o.frequency.setValueAtTime(f, t0);
+  g.gain.setValueAtTime(.0001, t0); g.gain.exponentialRampToValueAtTime(vol, t0 + .02); g.gain.exponentialRampToValueAtTime(.0001, t0 + dur);
+  o.connect(g).connect(c.destination); o.start(t0); o.stop(t0 + dur + .03);
+}
+function sfx(kind){
+  if(!S.sound) return;
+  const c = ac(); if(!c) return; const t = c.currentTime + .01;
+  if(kind === 'ok') [784, 988, 1319].forEach((f,i) => tone(c, f, t + i*.09, .24));
+  else if(kind === 'bad'){ tone(c, 220, t, .18, 'square', .05); tone(c, 185, t + .13, .24, 'square', .05); }
+  else if(kind === 'win') [523, 659, 784, 1047, 784, 1047, 1319].forEach((f,i) => tone(c, f, t + i*.12, i === 6 ? .6 : .28, 'triangle', .2));
+  else if(kind === 'door'){
+    const o = c.createOscillator(), g = c.createGain(), lp = c.createBiquadFilter();
+    o.type = 'sawtooth'; lp.type = 'lowpass'; lp.frequency.value = 900;
+    o.frequency.setValueAtTime(95, t); o.frequency.linearRampToValueAtTime(170, t + .45); o.frequency.linearRampToValueAtTime(75, t + .8);
+    g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.09, t + .05); g.gain.exponentialRampToValueAtTime(.0001, t + .85);
+    o.connect(lp).connect(g).connect(c.destination); o.start(t); o.stop(t + .9);
+    [659, 880, 1175].forEach((f,i) => tone(c, f, t + .85 + i*.1, .35));
+  }
+}
+const beep = ok => sfx(ok ? 'ok' : 'bad');
+const MELODY = [523,659,784,659,698,880,784,0, 659,784,880,784,698,659,587,0, 523,587,659,698,784,880,988,1047, 988,880,784,698,659,587,523,0];
+function startMusic(){
+  const c = ac(); if(!c) return false;
+  let i = 0;
+  const step = () => { const t = c.currentTime + .02, f = MELODY[i % MELODY.length]; if(f){ tone(c, f, t, .26, 'triangle', .22); tone(c, f/2, t, .26, 'sine', .12); } i++; };
+  stopMusic(); step(); musicTimer = setInterval(step, 260); return true;
+}
+function stopMusic(){ if(musicTimer){ clearInterval(musicTimer); musicTimer = null; } }
+document.addEventListener('visibilitychange', () => { if(document.hidden) stopMusic(); });
+function cheer(){
+  const fx = $('#fx'); if(!fx) return;
+  const words = ['答對了！','太棒了！','好厲害！','完全正確！'];
+  const colors = ['#f28c38','#3aa57a','#3b82c4','#8b6cc9','#e0a91c'];
+  const sparks = Array.from({length:18}, (_,i) => { const a = i/18*Math.PI*2, r = 110 + (i%4)*30; return `<i class="spark" style="left:50%;top:110px;background:${colors[i%5]};--dx:${Math.cos(a)*r}px;--dy:${Math.sin(a)*r}px"></i>`; }).join('');
+  fx.innerHTML = `<div class="toast">${svg('core')}${words[Math.floor(Math.random()*words.length)]}</div>${sparks}`;
+  clearTimeout(cheer.t); cheer.t = setTimeout(() => { fx.innerHTML = ''; }, 1500);
+}
+function say(el, msg, type='bad'){
+  if(!el) return;
+  el.className = 'fb show ' + type; el.textContent = msg;
+  if(type === 'bad') sfx('bad'); else if(type === 'ok'){ sfx('ok'); cheer(); }
+}
+
+/* ---------- header ---------- */
+function header(){
+  const n = S.done.length;
+  return `<header class="top"><div class="wrap">
+    <div class="brand">數位校園大逃脫</div>
+    <div class="prog"><small>目前進度：${n}／6</small><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="${n}"><i style="width:${n/6*100}%"></i></div></div>
+    <button class="tbtn" data-act="bag">${svg('bag')}金鑰背包</button>
+    <button class="tbtn" data-act="sound" aria-label="${S.sound?'關閉音效':'開啟音效'}">${svg(S.sound?'sound':'mute')}${S.sound?'音效開':'靜音'}</button>
+    <button class="tbtn" data-act="settings" aria-label="設定">${svg('gear')}</button>
+  </div></header>`;
+}
+function bindHeader(){
+  $$('[data-act]').forEach(b => b.addEventListener('click', () => {
+    const a = b.dataset.act;
+    if(a==='bag') openBag();
+    if(a==='sound'){ S.sound = !S.sound; save(); if(S.sound) beep(true); render(); }
+    if(a==='settings') openSettings();
+  }));
+}
+
+/* ---------- modal helpers ---------- */
+function modal(html, onBind){
+  layer.innerHTML = `<div class="modal" role="dialog" aria-modal="true"><div class="sheet card">${html}</div></div>`;
+  const m = $('.modal', layer);
+  m.addEventListener('click', e => { if(e.target === m) closeModal(); });
+  $$('[data-close]', m).forEach(b => b.addEventListener('click', closeModal));
+  onBind && onBind(m);
+  const f = $('button,input', m); f && f.focus({preventScroll:true});
+}
+function closeModal(){ layer.innerHTML = ''; }
+function openBag(){
+  modal(`<h3>金鑰背包</h3><p class="muted">已取得 ${S.done.length} 把金鑰。數字會在第六關派上用場。</p>
+    <div class="pack">${L.slice(1).map(l => {
+      const got = S.done.includes(l.n);
+      return `<div class="kslot ${got?'':'off'}">${keySvg(got?l.hex:'#b8c6c3')}<div><small>${l.key}</small><b>${got ? (l.digit ?? '★') : '？'}</b></div></div>`;
+    }).join('')}</div><div class="row"><button class="btn ghost" data-close>關閉</button></div>`);
+}
+function openSettings(confirming=false){
+  modal(`<h3>設定</h3>
+    <button class="check" id="set-sound" aria-pressed="${S.sound}"><i></i>音效（預設靜音，避免干擾研習）</button>
+    ${storageOK ? '<p class="note">進度自動存在這台 iPad 的 Safari 中，重新整理後可以接著玩。</p>' : '<p class="fb show bad">這個瀏覽器無法儲存進度（可能是私密瀏覽）。可以照常遊玩，但重新整理後會從頭開始。</p>'}
+    ${confirming ? `<div class="fb show bad">確定要清除這台 iPad 上的所有進度與金鑰嗎？清除後無法復原。</div>
+      <div class="row"><button class="btn ghost" id="no">取消</button><button class="btn" id="yes" style="background:var(--coral);color:#fff;box-shadow:0 3px 0 #8e2c1d">確定清除</button></div>`
+    : `<div class="row"><button class="btn ghost" id="reset">重新開始</button><button class="btn dark" data-close>完成</button></div>`}`, m => {
+      $('#set-sound', m).addEventListener('click', () => { S.sound=!S.sound; save(); if(S.sound) beep(true); render(); openSettings(confirming); });
+      if(confirming){
+        $('#no', m).addEventListener('click', () => openSettings(false));
+        $('#yes', m).addEventListener('click', () => { store.clear(); S = fresh(); closeModal(); render(); });
+      } else $('#reset', m).addEventListener('click', () => openSettings(true));
+    });
+}
+function openHints(n){
+  const opened = S.hints[n] || 0;
+  const names = ['提示一：方向提示','提示二：操作提示','提示三：詳細解答'];
+  modal(`<h3>求救提示</h3>
+    ${HINTS[n].slice(0, opened).map((h,i) => `<div class="hint"><b>${names[i]}</b>${esc(h)}</div>`).join('')}
+    ${opened < 3 ? `<button class="btn" id="more">打開${names[opened].split('：')[0]}</button>` : '<p class="note">三段提示都打開了。還是卡住的話，請舉手找種子教師。</p>'}
+    <div class="row"><button class="btn ghost" data-close>回到關卡</button></div>`, m => {
+      const b = $('#more', m);
+      b && b.addEventListener('click', () => { S.hints[n] = opened + 1; save(); openHints(n); if(S.cur===n && S.screen==='level' && S.hints[n]===3) renderLevelBody(); });
+    });
+}
+
+/* ---------- reward ---------- */
+function award(n){
+  if(!S.done.includes(n)){ S.done.push(n); S.done.sort(); }
+  if(n===6) S.finishedAt = S.finishedAt || new Date().toISOString();
+  save(); stopMusic(); sfx('win');
+  const l = L[n];
+  const sparks = Array.from({length:24}, (_,i) => {
+    const a = i/24*Math.PI*2, r = 160 + (i%5)*30;
+    const c = ['#f28c38','#3aa57a','#3b82c4','#8b6cc9','#e0a91c'][i%5];
+    return `<i class="spark" style="left:50%;top:40%;background:${c};--dx:${Math.cos(a)*r}px;--dy:${Math.sin(a)*r}px"></i>`;
+  }).join('');
+  layer.innerHTML = `<div class="reward" role="dialog" aria-modal="true">${sparks}<div>
+    ${keySvg(l.hex,'bigkey')}
+    <h2>取得「${l.key}」</h2>
+    ${l.digit !== null ? `<div class="digit" aria-label="金鑰數字 ${l.digit}">${l.digit}</div><p>金鑰背面刻著數字 ${l.digit}，已放進金鑰背包。</p>`
+      : '<p style="margin:14px 0;font-size:20px">恭喜你！數位校園系統已成功重新啟動！<br>你已成為油廠國小數位教學特務！</p>'}
+    <div style="margin-top:22px"><button class="btn big" id="go">${n===6 ? '領取特務證書' : '回到冒險地圖'}</button></div>
+  </div></div>`;
+  $('#go', layer).addEventListener('click', () => { layer.innerHTML=''; S.screen = n===6 ? 'cert' : 'map'; S.cur = Math.min(n+1, 6); save(); render(); });
+  $('#go', layer).focus();
+}
+
+/* ---------- screens ---------- */
+function render(){
+  stopMusic();
+  if(S.screen !== 'home' && !S.name) S.screen = 'register';
+  if(S.screen === 'cert' && S.done.length < 6) S.screen = 'map';
+  if(S.screen === 'level' && !unlocked(S.cur)) S.screen = 'map';
+  ({home:renderHome, register:renderRegister, map:renderMap, level:renderLevel, cert:renderCert}[S.screen] || renderHome)();
+  window.scrollTo(0,0);
+}
+const unlocked = n => n===1 || S.done.includes(n-1);
+
+function renderHome(){
+  const has = S.name && S.done.length > 0;
+  document.body.style.background = '#0a3533';
+  app.innerHTML = `<section class="home"><div class="wrap">
+    <div>
+      <div class="alarm"><b></b>系統警報</div>
+      <h1>數位校園大逃脫<br><span>消失的教學金鑰</span></h1>
+      <div class="lines"><p>數位校園系統發生異常！</p><p>六把教學金鑰已被鎖定！</p><p>請運用你的 iPad 技能，完成六大挑戰！</p></div>
+      <div class="homebtns">
+        ${has ? `<button class="btn big" id="cont">繼續任務（${S.done.length}／6）</button><button class="btn ghost big" id="restart">重新開始</button>`
+              : `<button class="btn big" id="start">開始解鎖任務</button>`}
+      </div>
+      <p class="meta">高雄市楠梓區油廠國民小學｜iPad 基礎操作研習｜約 60 分鐘</p>
+    </div>
+    <div class="scene">${homeScene()}</div>
+  </div></section>`;
+  const st = $('#start'); st && st.addEventListener('click', () => { S.screen = S.name ? 'map' : 'register'; save(); render(); });
+  const c = $('#cont'); c && c.addEventListener('click', () => { S.screen = S.done.length>=6 ? 'cert' : 'map'; save(); render(); });
+  const r = $('#restart'); r && r.addEventListener('click', () => openSettings(true));
+}
+function homeScene(){
+  // school at night: building, windows, a glowing broken screen and six locked keys orbiting
+  const keys = L.slice(1).map((l,i) => {
+    const a = -Math.PI/2 + i*Math.PI/3, x = 200 + Math.cos(a)*150, y = 170 + Math.sin(a)*120;
+    return `<g transform="translate(${x-30} ${y-30})"><circle cx="30" cy="30" r="32" fill="rgba(255,255,255,.08)"/><g transform="translate(2 2) scale(.88)">${keySvg(l.hex).replace(/<\/?svg[^>]*>/g,'')}</g></g>`;
+  }).join('');
+  return `<svg viewBox="0 0 400 400" role="img" aria-label="夜晚的油廠國小與六把被鎖住的金鑰">
+    <circle cx="330" cy="60" r="22" fill="#fdf1c7" opacity=".9"/>
+    <rect x="70" y="230" width="260" height="120" rx="6" fill="#0d3f3d" stroke="#2a8a83" stroke-width="2"/>
+    <polygon points="60,234 200,170 340,234" fill="#11504d" stroke="#2a8a83" stroke-width="2"/>
+    <rect x="182" y="290" width="36" height="60" rx="4" fill="#082c2b"/>
+    ${[[90,250],[130,250],[250,250],[290,250],[90,295],[130,295],[250,295],[290,295]].map(([x,y],i)=>`<rect x="${x}" y="${y}" width="24" height="24" rx="3" fill="${i===2?'#f28c38':'#1e6a66'}" ${i===2?'opacity=".9"':''}/>`).join('')}
+    <rect x="150" y="196" width="100" height="40" rx="6" fill="#082c2b" stroke="#ff6b55" stroke-width="2"/>
+    <text x="200" y="222" text-anchor="middle" font-size="15" font-weight="700" fill="#ff8a78" font-family="sans-serif">ERROR</text>
+    <rect x="0" y="350" width="400" height="50" fill="#082c2b"/>
+    ${keys}
+  </svg>`;
+}
+
+function renderRegister(){
+  document.body.style.background = '';
+  const grades = ['一年級','二年級','三年級','四年級','五年級','六年級','科任','行政'];
+  app.innerHTML = header() + `<main><div class="wrap"><form class="form card" id="reg" novalidate>
+    <div><p class="eyebrow">特務登記</p><h2 style="font-size:30px;margin-top:6px">歡迎加入數位校園特務隊</h2>
+      <p class="muted" style="margin-top:6px">資料只存在這台 iPad 的瀏覽器，不會上傳。</p></div>
+    <div class="field"><label for="nm">特務代號（姓名或暱稱）</label><input type="text" id="nm" maxlength="12" autocomplete="off" value="${esc(S.name)}" placeholder="例如：王老師"></div>
+    <div class="field"><span class="lab">所屬學年</span><div class="chips" id="grades">${grades.map(g=>`<button type="button" class="chip" aria-pressed="${S.grade===g}" data-g="${g}">${g}</button>`).join('')}</div></div>
+    <div class="field"><span class="lab">是否第一次使用 iPad？</span><div class="chips" id="first">
+      <button type="button" class="chip" data-f="yes" aria-pressed="${S.first==='yes'}">是，第一次</button>
+      <button type="button" class="chip" data-f="no" aria-pressed="${S.first==='no'}">否，用過</button></div>
+      <p class="note">選「是」時，每關會先顯示一則小提示，機密文件也會停留久一點。</p></div>
+    <div class="field"><span class="lab">遊戲音效</span><div class="chips" id="snd">
+      <button type="button" class="chip" data-s="on" aria-pressed="${S.sound}">開啟（答對有音樂）</button>
+      <button type="button" class="chip" data-s="off" aria-pressed="${!S.sound}">關閉</button></div>
+      <p class="note">研習現場人多時，可以把 iPad 音量調小一點。之後也能從右上角切換。</p></div>
+    <div class="fb" id="regfb" aria-live="polite"></div>
+    <button class="btn big" type="submit">進入冒險地圖</button>
+  </form></div></main>`;
+  bindHeader();
+  let grade = S.grade, first = S.first;
+  $$('#grades .chip').forEach(b => b.addEventListener('click', () => { grade = b.dataset.g; $$('#grades .chip').forEach(x => x.setAttribute('aria-pressed', x===b)); }));
+  $$('#first .chip').forEach(b => b.addEventListener('click', () => { first = b.dataset.f; $$('#first .chip').forEach(x => x.setAttribute('aria-pressed', x===b)); }));
+  $$('#snd .chip').forEach(b => b.addEventListener('click', () => { S.sound = b.dataset.s === 'on'; $$('#snd .chip').forEach(x => x.setAttribute('aria-pressed', x===b)); if(S.sound) sfx('ok'); }));
+  $('#reg').addEventListener('submit', e => {
+    e.preventDefault();
+    const name = $('#nm').value.trim();
+    const fb = $('#regfb');
+    if(!name) return say(fb, '請先輸入特務代號，證書上會用到。');
+    if(!grade) return say(fb, '請點選你的所屬學年。');
+    if(!first) return say(fb, '請選擇是否第一次使用 iPad。');
+    Object.assign(S, {name, grade, first, screen:'map'}); save(); render();
+  });
+}
+
+function renderMap(){
+  document.body.style.background = '';
+  const next = [1,2,3,4,5,6].find(n => !S.done.includes(n));
+  app.innerHTML = header() + `<main><div class="wrap">
+    <div class="maphead"><div><p class="eyebrow">冒險地圖</p><h2>${esc(S.name)} 特務，請依序找回六把金鑰</h2></div>
+      ${S.done.length===6 ? '<button class="btn" id="tocert">查看特務證書</button>' : ''}</div>
+    ${storageOK ? '' : '<p class="fb show bad" style="margin-bottom:16px">這個瀏覽器無法儲存進度，重新整理後會從頭開始。</p>'}
+    <div class="rooms">${L.slice(1).map(l => {
+      const done = S.done.includes(l.n), open = unlocked(l.n), cur = l.n === next;
+      const cls = done ? 'done' : cur ? 'current' : open ? '' : 'locked';
+      const state = done ? '<span class="state st-done">已完成</span>' : cur ? '<span class="state st-cur">目前任務</span>' : '<span class="state st-lock">未開放</span>';
+      return `<button class="room card ${cls}" data-n="${l.n}" ${open?'':'aria-disabled="true"'} aria-label="第 ${l.n} 關 ${l.name}">
+        ${state}
+        <span class="ico" style="background:${l.color}">${svg(open?l.icon:'lock')}</span>
+        <h3>第 ${l.n} 關｜${l.name}</h3>
+        <span class="sub">建議 ${l.min} 分鐘</span>
+        ${done ? `<span class="keyline">${keySvg(l.hex)}${l.key}${l.digit!==null?`・數字 ${l.digit}`:''}</span>` : ''}
+      </button>`;
+    }).join('')}</div>
+  </div></main>`;
+  bindHeader();
+  $$('.room').forEach(b => b.addEventListener('click', () => {
+    const n = +b.dataset.n;
+    if(!unlocked(n)){ b.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:260}); return; }
+    S.screen = 'level'; S.cur = n; save(); render();
+  }));
+  const tc = $('#tocert'); tc && tc.addEventListener('click', () => { S.screen='cert'; save(); render(); });
+}
+
+function renderLevel(){
+  document.body.style.background = '';
+  const n = S.cur, l = L[n];
+  if(S.first === 'yes' && !S.hints[n]){ S.hints[n] = 1; save(); }
+  app.innerHTML = header() + `<main><div class="wrap">
+    <div class="lvtop">
+      <button class="btn ghost" id="tomap" style="min-height:48px;padding:0 16px">${svg('back','width="20" height="20"')}地圖</button>
+      <h2>第 ${n} 關｜${l.name}</h2>
+      <button class="btn dark" id="help" style="min-height:48px">${svg('help','width="20" height="20"')}求救提示</button>
+    </div>
+    <div class="story">${svg(l.icon)}<p>${l.story}</p></div>
+    ${S.first==='yes' ? `<div class="firsttip" style="margin-bottom:16px"><b>小提示</b><span>${esc(HINTS[n][0])}</span></div>` : ''}
+    <div id="lvbody"></div>
+  </div></main>`;
+  bindHeader();
+  $('#tomap').addEventListener('click', () => { S.screen='map'; save(); render(); });
+  $('#help').addEventListener('click', () => openHints(n));
+  renderLevelBody();
+}
+function renderLevelBody(){
+  const body = $('#lvbody'); if(!body) return;
+  LV[S.cur](body, lv(S.cur));
+}
+const doneBanner = n => S.done.includes(n) ? `<div class="fb show ok">這一關已經完成，金鑰已在背包裡。可以再玩一次練習，或回到地圖。</div>` : '';
+
+/* ---------- Level 1 ---------- */
+const LV = {};
+LV[1] = (body, st) => {
+  st.a = st.a || 0; st.b = st.b || {}; st.c = st.c || [false,false];
+  const targets = [
+    {id:'top', ask:'點出「頂端按鈕」（電源鍵／Touch ID）', lab:'頂端按鈕'},
+    {id:'vol', ask:'點出「音量按鈕」', lab:'音量鍵'},
+    {id:'usb', ask:'點出「USB-C 充電孔」', lab:'USB-C 充電孔'}
+  ];
+  const wrong = {
+    top:{vol:'那是音量鍵。頂端按鈕在 iPad 直拿時的「上緣」右側。', usb:'那是充電孔。頂端按鈕在機身上緣。', cam:'那是前置相機。頂端按鈕在上緣右側，也是 Touch ID。', screen:'iPad（A16）的螢幕下方沒有 Home 鍵喔！頂端按鈕在上緣。'},
+    vol:{top:'那是頂端按鈕。音量鍵在右側邊緣的上方，有兩顆。', usb:'那是充電孔。音量鍵在右側邊緣上方。', cam:'那是前置相機。音量鍵在它上方一點的右側邊緣。', screen:'音量鍵是實體按鈕，在機身右側邊緣上方。'},
+    usb:{top:'那是頂端按鈕。充電孔在 iPad 的「下緣」中央。', vol:'那是音量鍵。充電孔在下緣中央。', cam:'那是前置相機。充電孔在下緣中央。', screen:'充電孔在機身下緣中央。'}
+  };
+  const aDone = st.a >= 3, bDone = ['tap','hold','quick'].every(k => st.b[k]), cDone = st.c[0] && st.c[1];
+  const ops = [['tap','短按頂端按鈕'],['hold','按住頂端按鈕＋音量鍵'],['quick','同時快按頂端按鈕＋音量鍵']];
+  const res = [['quick','截圖'],['tap','鎖定／喚醒螢幕'],['hold','出現關機滑桿']];
+  body.innerHTML = `${doneBanner(1)}
+  <div class="guide card">
+    <p class="ask">第一關有兩個小關，左右各一個，先做哪個都可以</p>
+    <div class="subs">
+      <div class="subitem ${aDone?'ok':''}"><span class="sn">${aDone?'✓':'1'}</span><div><b>小關一（左邊）</b>在 iPad 圖上點出正確的按鈕</div></div>
+      <div class="subitem ${bDone?'ok':''}"><span class="sn">${bDone?'✓':'2'}</span><div><b>小關二（右邊）</b>配對遊戲：把操作和結果配成一對</div></div>
+      <div class="subitem ${cDone?'ok':''}"><span class="sn">${cDone?'✓':'3'}</span><div><b>最後</b>兩個小關都完成，到手上的 iPad 調音量</div></div>
+    </div>
+  </div>
+  <div class="two">
+    <div class="card panel">
+      <div class="step ${aDone?'done':''}"><span class="n">1</span><h3>小關一：找出按鈕</h3></div>
+      <p class="ask">${aDone ? '三條線路都接通了！' : `第 ${st.a+1}／3 題：${targets[st.a].ask}`}</p>
+      ${ipadL1(st.a)}
+      <div class="fb" id="fb1" aria-live="polite"></div>
+    </div>
+    <div class="card panel">
+      <div class="step ${bDone?'done':''}"><span class="n">2</span><h3>小關二：配對遊戲</h3></div>
+      <p><strong>玩法：</strong>先點左欄的「操作」卡，它會變成橘色；再點右欄對應的「結果」卡。三組都配對成功就過關。</p>
+      <div class="match">
+        <div class="col"><span class="colh">操作</span>${ops.map(([k,t])=>`<button class="mcard ${st.b[k]?'ok':''}" data-card="${k}" aria-pressed="false">${t}</button>`).join('')}</div>
+        <div class="col"><span class="colh">結果</span>${res.map(([k,t])=>`<button class="mcard ${st.b[k]?'ok':''}" data-res="${k}">${t}</button>`).join('')}</div>
+      </div>
+      <div class="fb" id="fb2" aria-live="polite"></div>
+    </div>
+  </div>
+  <div class="card panel" style="margin-top:20px" ${aDone&&bDone?'':'hidden'}>
+    <div class="step ${cDone?'done':''}"><span class="n">3</span><h3>實機任務：用手上的 iPad 調音量</h3></div>
+    <div class="two">
+      <div class="real">
+        <span class="tag">照著做</span>
+        <ol class="olist">
+          <li>按下面的「播放音樂」，遊戲會播一段音樂。</li>
+          <li>音樂播放時，按 iPad 側邊的<strong>音量鍵</strong>：螢幕上的音量指示往下降、音樂變小聲，就是按到「音量降低」了。</li>
+          <li>聽到變小聲就打勾，再按「停止音樂」。</li>
+          <li>最後短按頂端按鈕鎖定螢幕，再按一次喚醒並解鎖。</li>
+        </ol>
+        <button class="btn dark big" id="music">${musicTimer ? '停止音樂' : '播放音樂'}</button>
+      </div>
+      <div style="display:grid;gap:12px;align-content:start">
+        <button class="check" data-c="0" aria-pressed="${st.c[0]}"><i></i>我按了音量降低鍵，音樂變小聲了</button>
+        <button class="check" data-c="1" aria-pressed="${st.c[1]}"><i></i>我鎖定螢幕再喚醒解鎖了（不需要關機）</button>
+        <p class="note">網頁讀不到你按了哪個實體按鈕，也讀不到 iPad 的音量大小，所以請用耳朵確認後自己打勾。</p>
+        <button class="btn big" id="fin1" ${cDone?'':'disabled'}>我完成了，啟動電力</button>
+      </div>
+    </div>
+  </div>`;
+  const fb1 = $('#fb1'), fb2 = $('#fb2');
+  $$('.ipadsvg .hot', body).forEach(h => h.addEventListener('click', () => {
+    if(st.a >= 3) return;
+    const t = targets[st.a], id = h.dataset.id;
+    if(id === t.id){ st.a++; save(); say(fb1, `答對了！那就是${t.lab}。`, 'ok'); setTimeout(()=>LV[1](body, st), 900); }
+    else say(fb1, '再試一次！' + (wrong[t.id][id] || '請再找找看。'));
+  }));
+  let sel = null;
+  $$('[data-card]', body).forEach(c => c.addEventListener('click', () => {
+    if(st.b[c.dataset.card]) return;
+    sel = c.dataset.card; $$('[data-card]', body).forEach(x => x.setAttribute('aria-pressed', x===c));
+    fb2.className = 'fb show info'; fb2.textContent = '很好！現在點右欄對應的結果。';
+  }));
+  const mw = {
+    tap:'短按頂端按鈕只會鎖定或喚醒螢幕，不會關機也不會截圖。',
+    hold:'「按住」兩顆鍵不放，會跳出關機滑桿；快按才是截圖。',
+    quick:'「同時快按快放」兩顆鍵是截圖；按太久才會變成關機滑桿。'
+  };
+  $$('[data-res]', body).forEach(r => r.addEventListener('click', () => {
+    if(st.b[r.dataset.res]) return;
+    if(!sel) return say(fb2, '先點左欄的一張「操作」卡，再點它的結果。', 'info');
+    if(r.dataset.res === sel){ st.b[sel] = true; save(); say(fb2, '配對成功！', 'ok'); sel = null; setTimeout(()=>LV[1](body, st), 900); }
+    else say(fb2, '再試一次！' + mw[sel]);
+  }));
+  const mb = $('#music');
+  mb && mb.addEventListener('click', () => {
+    if(musicTimer){ stopMusic(); mb.textContent = '播放音樂'; }
+    else if(startMusic()) mb.textContent = '停止音樂';
+  });
+  $$('[data-c]', body).forEach(c => c.addEventListener('click', () => {
+    const i = +c.dataset.c; st.c[i] = !st.c[i]; save(); c.setAttribute('aria-pressed', st.c[i]);
+    if(i === 0 && st.c[0]){ stopMusic(); if(mb) mb.textContent = '播放音樂'; cheer(); sfx('ok'); }
+    $('#fin1').disabled = !(st.c[0] && st.c[1]);
+  }));
+  const f = $('#fin1'); f && f.addEventListener('click', () => { stopMusic(); award(1); });
+};
+function ipadL1(a){
+  const lit = id => ({top:a>0, vol:a>1, usb:a>2})[id] ? 'lit' : '';
+  return `<svg class="ipadsvg" viewBox="0 0 300 400" role="img" aria-label="iPad 正面示意圖，可點選按鈕位置">
+    <rect class="part ${lit('top')}" x="168" y="32" width="44" height="9" rx="3"/>
+    <rect class="part ${lit('vol')}" x="238" y="70" width="9" height="30" rx="3"/>
+    <rect class="part ${lit('vol')}" x="238" y="106" width="9" height="30" rx="3"/>
+    <rect x="60" y="38" width="182" height="264" rx="22" fill="#2a3a44"/>
+    <rect x="71" y="49" width="160" height="242" rx="11" fill="#e3efec"/>
+    ${[0,1,2,3,4,5,6,7,8,9,10,11].map(i=>`<rect x="${86+(i%4)*36}" y="${66+Math.floor(i/4)*40}" width="24" height="24" rx="6" fill="${['#0f7c78','#f28c38','#e0a91c','#7fb8ae','#c7432f','#5d8fb8'][i%6]}"/>`).join('')}
+    <circle cx="236.5" cy="170" r="3" fill="#0b1418"/>
+    <rect class="part ${lit('usb')}" x="134" y="300" width="34" height="8" rx="3"/>
+    ${a>0?'<text x="190" y="22" text-anchor="middle">頂端按鈕</text>':''}
+    ${a>1?'<text x="256" y="66">音量</text>':''}
+    ${a>2?'<text x="151" y="328" text-anchor="middle">USB-C</text>':''}
+    <rect class="hot" data-id="screen" x="71" y="49" width="160" height="242"/>
+    <rect class="hot" data-id="top" x="160" y="10" width="60" height="38"/>
+    <rect class="hot" data-id="vol" x="231" y="62" width="44" height="80"/>
+    <rect class="hot" data-id="cam" x="226" y="150" width="40" height="40"/>
+    <rect class="hot" data-id="usb" x="118" y="294" width="66" height="40"/>
+  </svg>`;
+}
+
+/* ---------- Level 2 ---------- */
+let awayAt = 0;
+document.addEventListener('visibilitychange', () => {
+  if(S.screen !== 'level' || S.cur !== 2) return;
+  const st = lv(2);
+  if((st.d||0) < 4 || st.away) return;
+  if(document.hidden){ awayAt = Date.now(); }
+  else if(awayAt && Date.now() - awayAt > 800){ st.away = true; save(); renderLevelBody(); setTimeout(() => { sfx('ok'); cheer(); }, 200); }
+});
+const MEANING = {
+  tap:['點一下＝「打開、選擇」','打開 App、按下按鈕、選取項目，都是點一下，就像電腦滑鼠點一下。輕輕碰就好，不用用力。'],
+  press:['長按＝「更多選項」','長按 App 圖示會跳出快速選單，繼續按住 App 會抖動，可以移動或刪除；長按文字可以選取，長按照片可以預覽或拷貝。'],
+  swipe:['滑動＝「捲動、翻頁、移動」','上下滑捲動網頁與文件，左右滑翻頁、換照片；按住不放再拖，可以移動物件。'],
+  pinch:['雙指開合＝「放大、縮小」','兩根手指張開放大照片、地圖、網頁，捏合縮小；放大後用一根手指拖動，可以看其他地方。'],
+  appsw:['從底部上滑＝「回家、切換」','輕輕上滑一小段叫出 Dock，滑長一點回主畫面，滑到中間停住打開 App 切換器。']
+};
+LV[2] = (body, st) => {
+  st.d = st.d || 0;
+  const g = [['tap','點一下'],['press','長按'],['swipe','滑動'],['pinch','雙指放大'],['appsw','切換 App']];
+  const stepNow = st.d < 4 ? st.d : (st.away ? 5 : 4);
+  const mk = g[Math.min(stepNow, 4)][0];
+  body.innerHTML = `${doneBanner(2)}<div class="card panel">
+    <div class="gates">${g.map(([ic,t],i)=>`<div class="gate ${i<stepNow?'ok':i===stepNow?'now':''}">${svg(ic)}<span>${t}</span></div>`).join('')}</div>
+    <div id="stage2"></div>
+    <div class="fb" id="fb" aria-live="polite"></div>
+    <div class="meaning">${svg(mk)}<div><b>${MEANING[mk][0]}</b><p>${MEANING[mk][1]}</p></div></div>
+  </div>`;
+  const s2 = $('#stage2'), fb = $('#fb');
+  const next = (msg, delay=900) => { st.d++; save(); say(fb, msg, 'ok'); setTimeout(()=>LV[2](body, st), delay); };
+  if(st.d === 0){
+    s2.innerHTML = `<p class="ask">第一道門：點一下門把</p><div class="stage"><button class="door" id="door" aria-label="門把"></button></div>`;
+    $('#door').addEventListener('click', e => { if(e.currentTarget.classList.contains('open')) return; e.currentTarget.classList.add('open'); sfx('door'); setTimeout(() => next('門打開了！點一下就是「打開」。', 1200), 500); });
+  } else if(st.d === 1){
+    s2.innerHTML = `<p class="ask">第二道機關：長按拉桿 1.5 秒，等圓圈跑滿</p><div class="stage"><button class="lever" id="lever" aria-label="長按拉桿"><span id="lvt">按住不放</span></button></div>`;
+    const lvEl = $('#lever'); let t0=0, raf=0, sx=0, sy=0;
+    const stop = msg => { cancelAnimationFrame(raf); t0=0; lvEl.style.setProperty('--p',0); if(msg) say(fb, msg); };
+    const tick = () => { const p = Math.min(100,(performance.now()-t0)/15); lvEl.style.setProperty('--p',p); if(p>=100){ t0=0; $('#lvt').textContent='啟動！'; next('機關啟動了！長按就是叫出「更多選項」。'); } else raf=requestAnimationFrame(tick); };
+    lvEl.addEventListener('pointerdown', e => { e.preventDefault(); sx=e.clientX; sy=e.clientY; t0=performance.now(); try{lvEl.setPointerCapture(e.pointerId)}catch(_){} raf=requestAnimationFrame(tick); });
+    lvEl.addEventListener('pointermove', e => { if(t0 && Math.hypot(e.clientX-sx,e.clientY-sy)>14) stop('手指移動了！長按時手指要停在原地不動。'); });
+    lvEl.addEventListener('pointerup', () => { if(t0) stop('放太快了！要按住直到圓圈跑滿。'); });
+    lvEl.addEventListener('pointercancel', () => stop());
+    lvEl.addEventListener('contextmenu', e => e.preventDefault());
+  } else if(st.d === 2){
+    s2.innerHTML = `<p class="ask">第三道機關：用手指按住石塊，往右滑進虛線框</p><div class="stage"><div class="track" id="track"><div class="slot"></div><div class="stone" id="stone">⇢</div></div></div>`;
+    const tr = $('#track'), stn = $('#stone'); let sx=0, base=0, drag=false;
+    const max = () => tr.clientWidth - stn.offsetWidth - 16;
+    stn.addEventListener('pointerdown', e => { drag=true; sx=e.clientX; base=parseFloat(stn.style.transform.replace(/[^\d.]/g,''))||0; try{stn.setPointerCapture(e.pointerId)}catch(_){} });
+    stn.addEventListener('pointermove', e => { if(!drag) return; const x = Math.max(0, Math.min(max(), base + e.clientX - sx)); stn.style.transform = `translateX(${x}px)`; if(x >= max()-4){ drag=false; stn.style.background='var(--tang)'; next('石塊歸位了！'); } });
+    stn.addEventListener('pointerup', () => { if(drag){ drag=false; say(fb,'還差一點！手指不要離開螢幕，一路滑到右邊的虛線框。','info'); } });
+  } else if(st.d === 3){
+    const btns = (S.hints[2]||0) >= 3;
+    s2.innerHTML = `<p class="ask">第四道機關：用兩根手指放大藏寶圖，找到圖書館旁的小紙條，把上面的密碼輸入下方</p>
+      <div class="mapbox" id="mapbox"><div class="mapin" id="mapin">${treasureMap()}</div><span class="zoomtag" id="ztag">放大 1.0 倍</span>
+      ${btns?'<div class="zoombtns"><button id="zo" aria-label="縮小">−</button><button id="zi" aria-label="放大">＋</button></div>':''}</div>
+      <div class="codein" style="margin-top:14px"><label for="code2" style="font-weight:700">你看到的密碼：</label><input id="code2" inputmode="numeric" maxlength="1" aria-label="藏寶圖上的密碼" placeholder="?" autocomplete="off"><button class="btn" id="ok2">輸入你看到的密碼</button><button class="btn ghost" id="rz">還原大小</button></div>`;
+    pinchZoom($('#mapbox'), $('#mapin'), $('#ztag'));
+    $('#ok2').addEventListener('click', () => {
+      const v = $('#code2').value.trim();
+      if(v === '7') next('密碼正確！迷宮的第四道門打開了。');
+      else if(!v) say(fb, '請把你在藏寶圖小紙條上看到的數字填進方框。', 'info');
+      else say(fb, '數字不對喔！密碼寫在「圖書館」右下角的小紙條上，要放大到 3 倍左右才看得清楚。');
+    });
+  } else {
+    s2.innerHTML = st.away
+      ? `<div class="stage" style="min-height:200px"><div style="text-align:center"><p class="ask" style="color:#fff">你成功離開又回到了 Safari！</p><p style="margin:10px 0 18px">迷宮的最後一道門打開了。</p><button class="btn big" id="fin2">取得手勢之鑰</button></div></div>`
+      : `<p class="ask">進階挑戰：真的切換到另一個 App，再回到 Safari</p>
+        <div class="real"><span class="tag">在你手上的 iPad 完成，三種方法選一種</span>
+          <div class="ways">
+            <div><b>方法一：用 Dock（最簡單）</b><p>手指放在螢幕最底邊，<strong>輕輕往上滑一小段</strong>，下方會出現 Dock（常用 App 那一排）。點「照片」，看一下照片；再用同樣方法叫出 Dock，點 Safari 回來。</p></div>
+            <div><b>方法二：回主畫面</b><p>從最底邊<strong>往上滑長一點</strong>，超過 Dock 繼續滑再放開，就會回到主畫面。點「照片」，再回主畫面點 Safari。</p></div>
+            <div><b>方法三：App 切換器</b><p>從最底邊往上滑到畫面中間<strong>停住不放</strong>，會看到所有開過的 App，點 Safari 的畫面就回來了。</p></div>
+          </div>
+          <p class="note">只滑一小段出現 Dock 是正常的，那是 iPad 的設計。Dock 上沒有 Safari 時，用方法二或三回來。四指、五指手勢要先到「設定 › 多工處理與手勢」開啟，可能受學校管理限制。</p>
+          <p class="note">遊戲只偵測你「離開又回來」，用哪一種方法都可以。</p></div>`;
+    const f = $('#fin2'); f && f.addEventListener('click', () => award(2));
+  }
+};
+function treasureMap(){
+  return `<svg viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet" role="img" aria-label="油廠國小藏寶圖">
+    <rect width="800" height="400" fill="#f6efd8"/>
+    <path d="M40 360 C 180 300, 260 340, 360 260 S 560 120, 760 60" fill="none" stroke="#c9a36a" stroke-width="10" stroke-dasharray="2 18" stroke-linecap="round"/>
+    <g font-family="sans-serif" font-weight="700" fill="#5a4426">
+      <rect x="60" y="60" width="150" height="90" rx="10" fill="#e7d6ad" stroke="#a8875a" stroke-width="3"/><text x="135" y="112" text-anchor="middle" font-size="22">操場</text>
+      <rect x="300" y="40" width="130" height="80" rx="10" fill="#e7d6ad" stroke="#a8875a" stroke-width="3"/><text x="365" y="88" text-anchor="middle" font-size="22">自然教室</text>
+      <rect x="520" y="200" width="170" height="100" rx="10" fill="#e7d6ad" stroke="#a8875a" stroke-width="3"/><text x="605" y="258" text-anchor="middle" font-size="22">圖書館</text>
+      <rect x="120" y="230" width="140" height="80" rx="10" fill="#e7d6ad" stroke="#a8875a" stroke-width="3"/><text x="190" y="276" text-anchor="middle" font-size="22">音樂教室</text>
+      <rect x="698" y="306" width="22" height="14" fill="#fffaf0" stroke="#a8875a" stroke-width=".6"/>
+      <text x="709" y="315.5" text-anchor="middle" font-size="5" fill="#3a2a14">密碼 7</text>
+      <rect x="250" y="160" width="16" height="10" fill="#fffaf0" stroke="#a8875a" stroke-width=".5"/><text x="258" y="167" text-anchor="middle" font-size="4">加油</text>
+      <circle cx="720" cy="70" r="26" fill="none" stroke="#c7432f" stroke-width="4"/><path d="M706 56l28 28M734 56l-28 28" stroke="#c7432f" stroke-width="4"/>
+      <text x="40" y="385" font-size="16" fill="#8a6b3e">出發點</text>
+    </g></svg>`;
+}
+function pinchZoom(box, inner, tag){
+  let s = 1, x = 0, y = 0;
+  const pts = new Map(); let start = null;
+  const clamp = () => { const w = box.clientWidth, h = box.clientHeight; x = Math.min(0, Math.max(w - w*s, x)); y = Math.min(0, Math.max(h - h*s, y)); };
+  const apply = () => { clamp(); inner.style.transform = `translate(${x}px,${y}px) scale(${s})`; tag.textContent = `放大 ${s.toFixed(1)} 倍`; };
+  const rel = e => { const r = box.getBoundingClientRect(); return {x:e.clientX-r.left, y:e.clientY-r.top}; };
+  const setScale = (ns, cx, cy) => { ns = Math.max(1, Math.min(6, ns)); x = cx - (cx - x) * ns / s; y = cy - (cy - y) * ns / s; s = ns; apply(); };
+  box.addEventListener('pointerdown', e => {
+    if(e.target.closest('button')) return;
+    pts.set(e.pointerId, rel(e)); try{box.setPointerCapture(e.pointerId)}catch(_){}
+    if(pts.size === 2){ const [a,b] = [...pts.values()]; start = {d:Math.hypot(a.x-b.x,a.y-b.y)||1, s, x, y, cx:(a.x+b.x)/2, cy:(a.y+b.y)/2}; }
+    else if(pts.size === 1){ const p = rel(e); start = {px:p.x, py:p.y, x, y}; }
+  });
+  box.addEventListener('pointermove', e => {
+    if(!pts.has(e.pointerId)) return; pts.set(e.pointerId, rel(e));
+    if(pts.size >= 2 && start && start.d){
+      const [a,b] = [...pts.values()]; const d = Math.hypot(a.x-b.x,a.y-b.y);
+      const ns = Math.max(1, Math.min(6, start.s * d / start.d));
+      const cx = (a.x+b.x)/2, cy = (a.y+b.y)/2;
+      x = cx - (start.cx - start.x) * ns / start.s; y = cy - (start.cy - start.y) * ns / start.s; s = ns; apply();
+    } else if(pts.size === 1 && start && start.px !== undefined && s > 1){
+      const p = rel(e); x = start.x + p.x - start.px; y = start.y + p.y - start.py; apply();
+    }
+  });
+  const up = e => { pts.delete(e.pointerId); if(pts.size === 1){ const p=[...pts.values()][0]; start={px:p.x,py:p.y,x,y}; } else if(!pts.size) start=null; };
+  box.addEventListener('pointerup', up); box.addEventListener('pointercancel', up);
+  box.addEventListener('gesturestart', e => e.preventDefault());
+  box.addEventListener('wheel', e => { e.preventDefault(); const p = rel(e); setScale(s * (e.deltaY < 0 ? 1.15 : 0.87), p.x, p.y); }, {passive:false});
+  const zi = $('#zi'), zo = $('#zo'), rz = $('#rz');
+  zi && zi.addEventListener('click', () => setScale(s*1.4, box.clientWidth*0.85, box.clientHeight*0.75));
+  zo && zo.addEventListener('click', () => setScale(s/1.4, box.clientWidth/2, box.clientHeight/2));
+  rz && rz.addEventListener('click', () => { s=1; x=0; y=0; apply(); });
+}
+
+/* ---------- Level 3 ---------- */
+LV[3] = (body, st) => {
+  if(st.bv === undefined) st.bv = 90;
+  const keys = ['wifi','bt','air','rot','bri','pwr'];
+  const ccDone = keys.every(k => st[k]);
+  const T = [['wifi','點一下 Wi-Fi 圖示，讓它亮起來'],['bt','點一下藍牙圖示，讓它亮起來'],['air','認識飛航模式（點一下看說明）'],['rot','找出螢幕旋轉鎖定'],['bri','把亮度拖到一半（約 50%）'],['pwr','找出控制中心右上角的電源按鈕']];
+  const legend = [['plane','飛航模式','關閉所有無線連線；研習時不要開'],['wifi','Wi-Fi','連上學校網路'],['bt','藍牙','連接耳機、鍵盤等配件'],['share','AirDrop','把照片傳給附近的 iPad；按住左上連線區塊可展開，第四關會用到'],['rotlock','旋轉鎖定','固定畫面方向，不跟著轉'],['moon','專注模式','暫停通知'],['sun','亮度','上下拖動調整明暗'],['vol','音量','上下拖動調整大小聲'],['power','電源','iPadOS 18 起才有；點它出現「滑動來關機」']];
+  body.innerHTML = `${doneBanner(3)}<div class="two">
+    <div class="card panel">
+      <div class="step ${ccDone?'done':''}"><span class="n">1</span><h3>解除控制室警報</h3></div>
+      <div class="ccwrap ${ccDone?'calm':''}" id="ccwrap"><div class="siren"></div>
+        <button class="pwr ${st.pwr?'lit':''}" data-t="pwr" aria-label="電源">${svg('power')}</button>
+        <div class="cc">
+          <div class="conn">
+            <button class="cbtn air" data-t="air" aria-label="飛航模式">${svg('plane')}</button>
+            <button class="cbtn ${st.wifi?'on':''}" data-t="wifi" aria-label="Wi-Fi">${svg('wifi')}</button>
+            <button class="cbtn ${st.bt?'on':''}" data-t="bt" aria-label="藍牙">${svg('bt')}</button>
+            <button class="cbtn" data-t="drop" aria-label="AirDrop">${svg('share')}</button>
+          </div>
+          <button class="tile ${st.rot?'lockon':''}" data-t="rot" aria-label="螢幕旋轉鎖定">${svg('rotlock')}</button>
+          <div class="vslider" id="bri" role="slider" aria-label="亮度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${st.bv}" tabindex="0"><div class="fill" style="height:${st.bv}%"></div><span class="pct">${st.bv}%</span>${svg('sun')}</div>
+          <button class="tile" data-t="focus" aria-label="專注模式">${svg('moon')}</button>
+          <div class="vslider" id="vol" aria-label="音量"><div class="fill" style="height:40%"></div>${svg('vol')}</div>
+          <div class="media">目前沒有播放</div>
+        </div>
+        <div class="pwroff" id="pwroff" hidden>
+          <div class="slide"><span>${svg('power')}</span>滑動來關機</div>
+          <button class="btn ghost" id="pcancel">取消</button>
+        </div>
+      </div>
+      <div class="fb" id="fb" aria-live="polite"></div>
+      <div class="legend" aria-label="控制中心圖說">
+        <p class="lh">圖說：控制中心的按鈕</p>
+        ${legend.map(([ic,n,d]) => `<div class="lg">${svg(ic)}<div><b>${n}</b><span>${d}</span></div></div>`).join('')}
+      </div>
+      <p class="note">示意圖：iPadOS 26 的控制中心可以自訂，實際排列以手上的 iPad 為準。</p>
+    </div>
+    <div class="card panel">
+      <div class="tasks">${T.map(([k,t])=>`<div class="task ${st[k]?'ok':''}"><i></i>${t}</div>`).join('')}</div>
+      <div class="real" ${ccDone?'':'hidden'} id="obs">
+        <span class="tag">在你手上的 iPad 觀察後回答</span>
+        <p>打開真正的控制中心，回答兩題。<strong>請不要關閉 Wi-Fi、不要開飛航模式、不要關機</strong>，遊戲會中斷。</p>
+        <p style="font-weight:700">第一題：要從哪裡往下滑？點選位置。</p>
+        <svg class="mini" viewBox="0 0 300 210" role="img" aria-label="iPad 橫放示意圖，可點選滑動位置">
+          <rect x="20" y="10" width="260" height="190" rx="18" fill="#2a3a44"/><rect x="32" y="22" width="236" height="166" rx="8" fill="#e3efec"/>
+          <rect class="z" data-z="tl" x="34" y="24" width="60" height="44" rx="6"/>
+          <rect class="z" data-z="tc" x="120" y="24" width="60" height="44" rx="6"/>
+          <rect class="z ${st.q1?'pick':''}" data-z="tr" x="206" y="24" width="60" height="44" rx="6"/>
+          <rect class="z" data-z="bc" x="120" y="142" width="60" height="44" rx="6"/>
+        </svg>
+        <p style="font-weight:700">第二題：哪一個是「螢幕旋轉鎖定」的圖示？</p>
+        <div class="icons4">
+          <button data-q2="moon" aria-label="月亮">${svg('moon')}</button>
+          <button data-q2="rot" class="${st.q2?'ok':''}" aria-label="鎖頭加圓箭頭">${svg('rotlock')}</button>
+          <button data-q2="lock" aria-label="鎖頭">${svg('padlock')}</button>
+          <button data-q2="plane" aria-label="飛機">${svg('plane')}</button>
+        </div>
+        <div class="fb" id="fb3" aria-live="polite"></div>
+        <button class="btn big" id="fin3" ${st.q1&&st.q2?'':'disabled'}>解除警報，取得控制之鑰</button>
+      </div>
+    </div></div>`;
+  const fb = $('#fb'), fb3 = $('#fb3');
+  const refresh = () => setTimeout(() => LV[3](body, st), 900);
+  const mark = (k, msg) => { const first = !st[k]; st[k] = true; save(); say(fb, msg, first ? 'ok' : 'info'); if(first) refresh(); };
+  $$('[data-t]', body).forEach(b => b.addEventListener('click', () => {
+    const t = b.dataset.t;
+    if(t==='wifi'){ b.classList.add('on'); mark('wifi', 'Wi-Fi 亮起來了！亮著代表已開啟。研習時請保持開啟，遊戲才不會斷線。'); }
+    if(t==='bt'){ b.classList.add('on'); mark('bt', '藍牙亮起來了！藍牙用來連接耳機、鍵盤等配件。'); }
+    if(t==='rot'){ b.classList.add('lockon'); mark('rot', '答對了！這是螢幕旋轉鎖定，亮起時畫面不會跟著轉動。'); }
+    if(t==='air'){ b.animate([{background:'#f28c38'},{background:'rgba(255,255,255,.22)'}],{duration:900}); mark('air', '這是飛航模式。現在不要開！開了會切斷 Wi-Fi，遊戲就連不上了。'); }
+    if(t==='drop') say(fb, '這是 AirDrop，可以把照片傳給附近的 iPad。第四關會教你怎麼打開它。', 'info');
+    if(t==='focus') say(fb, '這是專注模式（月亮），用來暫停通知。這次要找的不是它。', 'info');
+    if(t==='pwr'){ $('#pwroff').hidden = false; say(fb, '這是控制中心的電源按鈕（iPadOS 18 起才有）。點它會出現「滑動來關機」。現在不要關機，請點「取消」。', 'info'); }
+  }));
+  $('#pcancel').addEventListener('click', () => { $('#pwroff').hidden = true; mark('pwr', '答對了！需要關機時，也可以從控制中心右上角的電源鈕進入。'); });
+  $('#vol').addEventListener('click', () => say(fb, '這是音量滑桿。這次要調的是有太陽圖示的亮度。', 'info'));
+  const bri = $('#bri');
+  const setB = e => { const r = bri.getBoundingClientRect(); const v = Math.round(Math.max(0, Math.min(100, (r.bottom - e.clientY) / r.height * 100))); st.bv = v; $('.fill', bri).style.height = v+'%'; $('.pct', bri).textContent = v+'%'; bri.setAttribute('aria-valuenow', v); };
+  let dragging = false;
+  bri.addEventListener('pointerdown', e => { dragging = true; try{bri.setPointerCapture(e.pointerId)}catch(_){} setB(e); });
+  bri.addEventListener('pointermove', e => { if(dragging) setB(e); });
+  bri.addEventListener('pointerup', () => {
+    dragging = false; save();
+    if(st.bv >= 45 && st.bv <= 55) mark('bri', `亮度 ${st.bv}%，剛好一半！警報燈變暗了。`);
+    else say(fb, st.bv > 55 ? `目前 ${st.bv}%，太亮了，再往下拖一點。` : `目前 ${st.bv}%，太暗了，往上拖一點。`, 'info');
+  });
+  bri.addEventListener('keydown', e => { if(e.key==='ArrowUp'||e.key==='ArrowDown'){ e.preventDefault(); st.bv = Math.max(0,Math.min(100,st.bv+(e.key==='ArrowUp'?5:-5))); save(); if(st.bv>=45&&st.bv<=55) st.bri = true; LV[3](body, st); $('#bri').focus(); } });
+  $$('.mini .z', body).forEach(z => z.addEventListener('click', () => {
+    const k = z.dataset.z;
+    if(k==='tr'){ st.q1 = true; save(); say(fb3, '對！控制中心要從右上角往下滑。', 'ok'); refresh(); }
+    else if(k==='tc') say(fb3, '從上方中間往下滑會打開「通知中心」，不是控制中心喔。');
+    else if(k==='tl') say(fb3, '左上角不是喔，再看一次你的 iPad，電池圖示在哪一邊？');
+    else say(fb3, '從底部往上滑是回主畫面或叫出 Dock。控制中心要從上方往下滑。');
+  }));
+  $$('[data-q2]', body).forEach(b => b.addEventListener('click', () => {
+    const k = b.dataset.q2;
+    if(k==='rot'){ st.q2 = true; save(); say(fb3, '答對了！鎖頭外面繞一圈箭頭，就是旋轉鎖定。', 'ok'); refresh(); }
+    else say(fb3, {moon:'月亮是專注模式，不是旋轉鎖定。', lock:'旋轉鎖定的鎖頭外面還有一圈箭頭喔。', plane:'飛機是飛航模式，現在不要開啟。'}[k]);
+  }));
+  const f = $('#fin3'); f && f.addEventListener('click', () => award(3));
+};
+
+/* ---------- Level 4: screenshot + AirDrop ---------- */
+const CELLS = [['sun',3],['owl',8],['book',1],['apple',6],['tree',2],['star',9],['moon',5],['pencil',0],['clock',4]];
+const AD_CODES = ['3816','5072','6294','7431','8159','9640','2785','4523'];
+const AD_MODES = {off:'關閉接收', contacts:'僅限聯絡人', all:'所有人（10 分鐘）'};
+function cellArt(k){
+  const A = {
+    sun:'<circle cx="32" cy="32" r="12" fill="#e9a91c"/><g stroke="#e9a91c" stroke-width="4" stroke-linecap="round"><path d="M32 6v8M32 50v8M6 32h8M50 32h8M13 13l6 6M45 45l6 6M13 51l6-6M45 19l6-6"/></g>',
+    owl:'<ellipse cx="32" cy="36" rx="18" ry="20" fill="#8a6440"/><circle cx="25" cy="30" r="7" fill="#fff"/><circle cx="39" cy="30" r="7" fill="#fff"/><circle cx="25" cy="30" r="3" fill="#222"/><circle cx="39" cy="30" r="3" fill="#222"/><path d="M29 38l3 5 3-5z" fill="#e9a91c"/><path d="M16 18l6 6M48 18l-6 6" stroke="#8a6440" stroke-width="5" stroke-linecap="round"/>',
+    book:'<path d="M10 16h20v34H10zM34 16h20v34H34z" fill="#3b82c4"/><path d="M30 16h4v34h-4z" fill="#22507a"/>',
+    apple:'<circle cx="32" cy="36" r="17" fill="#c7432f"/><path d="M32 20c0-6 4-9 9-9" stroke="#3aa57a" stroke-width="4" fill="none" stroke-linecap="round"/>',
+    tree:'<path d="M32 8 14 38h36z" fill="#3aa57a"/><rect x="28" y="38" width="8" height="16" fill="#8a6440"/>',
+    star:'<path d="M32 8l7 15 16 2-12 11 3 16-14-8-14 8 3-16L9 25l16-2z" fill="#e9a91c"/>',
+    moon:'<path d="M44 40A18 18 0 1 1 26 12a14 14 0 0 0 18 28z" fill="#5d6f9e"/>',
+    pencil:'<path d="M14 50l4-12 26-26 8 8-26 26z" fill="#f28c38"/><path d="M14 50l4-12 8 8z" fill="#f6d3a8"/>',
+    clock:'<circle cx="32" cy="32" r="20" fill="none" stroke="#444" stroke-width="4"/><path d="M32 20v13l8 5" stroke="#444" stroke-width="4" fill="none" stroke-linecap="round"/>'
+  };
+  return `<svg viewBox="0 0 64 64" aria-hidden="true">${A[k]}</svg>`;
+}
+LV[4] = (body, st) => {
+  st.opened = st.opened || 0;
+  const a = st.ad = st.ad || {};
+  if(!a.code){ a.code = AD_CODES[Math.floor(Math.random()*AD_CODES.length)]; save(); }
+  a.view = a.view || 'root'; a.mode = a.mode || 'off';
+  const secs = S.first === 'yes' ? 5 : 3;
+  const aDone = !!st.pw;
+  const guide = `<div class="guide card">
+    <p class="ask">第四關有兩個小關，要依序完成</p>
+    <div class="subs">
+      <div class="subitem ${aDone?'ok':''}"><span class="sn">${aDone?'✓':'1'}</span><div><b>小關一：截圖找密碼</b>把只出現幾秒的文件截圖，圈出重點，找到開鎖密碼</div></div>
+      <div class="subitem"><span class="sn">2</span><div><b>小關二：AirDrop 傳送門</b>打開 AirDrop，把截圖傳給夥伴</div></div>
+    </div></div>`;
+  if(!aDone){
+    body.innerHTML = `${doneBanner(4)}${guide}<div class="two">
+      <div class="card panel">
+        <div class="step"><span class="n">1</span><h3>打開機密文件</h3></div>
+        <p>文件只會出現 <strong>${secs} 秒</strong>。看到文件時立刻截圖，再到「照片」裡慢慢看。</p>
+        <div class="path">線索：開鎖密碼就是「貓頭鷹」<strong>右下方</strong>那一格裡的數字。</div>
+        <button class="btn big" id="open4">開啟機密文件</button>
+        <p class="note">已開啟 ${st.opened} 次。可以重複開啟，每次都只有 ${secs} 秒。文件最上方的「文件編號」是你專屬的，小關二會用到。</p>
+      </div>
+      <div class="card panel">
+        <div class="step"><span class="n">2</span><h3>圈出重點，輸入開鎖密碼</h3></div>
+        <div class="real"><span class="tag">在你手上的 iPad 完成</span>
+          <ol class="olist"><li>文件出現時，同時快按頂端按鈕＋音量鍵截圖。</li><li>點左下角縮圖，用觸控筆圈出貓頭鷹右下方那一格。</li><li>點「完成」，儲存到照片。</li></ol>
+          <p class="note">遊戲無法偵測截圖。圈好的截圖請留在照片裡，小關二要傳給夥伴。</p></div>
+        <div class="codein"><label for="code4" style="font-weight:700">開鎖密碼：</label><input id="code4" inputmode="numeric" maxlength="1" aria-label="開鎖密碼" placeholder="?" autocomplete="off"><button class="btn" id="ok4">輸入開鎖密碼</button></div>
+        <div class="fb" id="fb" aria-live="polite"></div>
+      </div></div>`;
+    const fb = $('#fb');
+    $('#open4').addEventListener('click', () => {
+      st.opened++; save();
+      layer.innerHTML = `<div class="secret" role="dialog" aria-label="機密文件"><div class="docpaper">
+        <div class="dochead"><div><b>機密教學文件</b><small>油廠國小數位校園</small></div><div class="docno"><small>文件編號</small><b>${a.code}</b></div></div>
+        <p class="docclue">開鎖密碼＝「貓頭鷹」右下方那一格裡的數字</p>
+        <div class="grid9">${CELLS.map(([k,d]) => `<div class="cell">${cellArt(k)}<em>${d}</em></div>`).join('')}</div>
+        <div class="timer"><i id="tbar"></i></div></div></div>`;
+      $('#tbar').animate([{transform:'scaleX(1)'},{transform:'scaleX(0)'}], {duration: secs*1000, fill:'forwards'});
+      setTimeout(() => { layer.innerHTML = ''; LV[4](body, st); }, secs*1000);
+    });
+    $('#ok4').addEventListener('click', () => {
+      const v = $('#code4').value.trim();
+      if(v === '9'){ st.pw = true; save(); say(fb, '密碼正確！文件解鎖了。接著用 AirDrop 把截圖傳給夥伴。', 'ok'); setTimeout(() => { LV[4](body, st); window.scrollTo(0, 0); }, 1200); return; }
+      if(!v) return say(fb, '請輸入你在截圖中找到的數字。', 'info');
+      const msg = {'8':'那是貓頭鷹自己那一格，再往右下方斜對角看一格。', '2':'那是貓頭鷹的正下方，要往「右下方」斜對角。', '1':'那是貓頭鷹右邊那一格，再往下一排。'}[v];
+      say(fb, '再試一次！' + (msg || '先在截圖中找到貓頭鷹，再看它右下方斜對角那一格裡的數字。'));
+    });
+    return;
+  }
+  // stage 2: AirDrop
+  const open = a.mode === 'all';
+  const side = [['wifi','Wi-Fi','已連線','wifi','#2f80ed'],['bt','藍牙','開啟','bt','#2f80ed'],['general','一般','','gear','#8e8e93'],['cc','控制中心','','sliders','#8e8e93'],['display','螢幕顯示與亮度','','sun','#2f80ed']];
+  let main = '';
+  if(a.view === 'root') main = `<div class="sempty">AirDrop 藏在左邊其中一個項目裡，點點看。</div>`;
+  else if(a.view === 'general') main = `<div class="shead">一般</div><div class="sgroup">
+      <button class="sitem" data-gi="about">關於本機<span class="chev">›</span></button>
+      <button class="sitem" data-gi="update">軟體更新<span class="chev">›</span></button></div>
+      <div class="sgroup">
+      <button class="sitem" data-gi="airdrop"><span class="sico" style="background:#2f80ed">${svg('share')}</span>AirDrop<em>${AD_MODES[a.mode]}</em><span class="chev">›</span></button>
+      <button class="sitem" data-gi="airplay">AirPlay 與接力<span class="chev">›</span></button></div>
+      <div class="sgroup"><button class="sitem" data-gi="kb">鍵盤<span class="chev">›</span></button></div>`;
+  else main = `<div class="shead"><button class="sback" data-back="1">‹ 一般</button><span>AirDrop</span></div>
+      <div class="sgroup" role="radiogroup" aria-label="AirDrop 接收設定">
+      ${Object.entries(AD_MODES).map(([k,t]) => `<button class="sitem" role="radio" aria-checked="${a.mode===k}" data-mode="${k}">${t}${a.mode===k?'<span class="tick">✓</span>':''}</button>`).join('')}</div>
+      <p class="scap">選「所有人」10 分鐘後會自動改回「僅限聯絡人」；沒有登入 Apple 帳號的 iPad 會改回「關閉接收」，下次要用時得再打開一次。</p>
+      <div class="sgroup"><button class="sitem" data-gi="known">管理已知的 AirDrop 聯絡人<span class="chev">›</span></button></div>`;
+  body.innerHTML = `${doneBanner(4)}${guide}
+  <div class="fb show ok" style="margin-bottom:16px">小關一完成！開鎖密碼正確。</div>
+  <div class="card panel" style="margin-bottom:20px">
+    <div class="step ${open?'done':''}"><span class="n">1</span><h3>小關二：先打開 AirDrop 傳送門</h3></div>
+    <p>iPad 的 AirDrop 一開始常是<strong>「關閉接收」</strong>，別人傳不進來。在下面的模擬「設定」裡把它打開。</p>
+    <div class="settings">
+      <div class="side"><div class="sttl">設定</div>
+        ${side.map(([k,t,v,ic,c]) => `<button class="srow ${a.view!=='root'&&k==='general'?'sel':''}" data-side="${k}"><span class="sico" style="background:${c}">${svg(ic)}</span>${t}<em>${v}</em></button>`).join('')}
+      </div>
+      <div class="smain">${main}</div>
+    </div>
+    <p class="note">示意畫面，項目名稱與排列以手上的 iPad 為準。也可以從控制中心打開：右上角往下滑 → 按住左上角的連線區塊 → 點 AirDrop → 選「所有人（10 分鐘）」。</p>
+    <div class="fb" id="fbs" aria-live="polite"></div>
+  </div>
+  <div class="card panel" ${open?'':'hidden'}>
+    <div class="step"><span class="n">2</span><h3>和夥伴互傳截圖</h3></div>
+    <div class="adcard"><small>你的文件編號（在你截圖的最上方）</small><b>${a.code}</b><span>夥伴收到你的截圖後，要輸入這組號碼</span></div>
+    <div class="real"><span class="tag">在你手上的 iPad 完成</span>
+      <ol class="olist">
+        <li>在真的 iPad 打開 AirDrop：設定 › 一般 › AirDrop › 所有人（10 分鐘）。Wi-Fi 和藍牙都要開著，個人熱點要關閉。</li>
+        <li>打開「照片」，點你剛才圈好重點的截圖 → 分享按鈕 → AirDrop → 點夥伴的 iPad 名稱。</li>
+        <li>夥伴的 iPad 跳出通知時點「接受」，截圖會存進他的「照片」。</li>
+        <li>打開夥伴傳給你的截圖，看最上方的「文件編號」，輸入下面。</li>
+      </ol>
+      <p class="note">iPadOS 26.2 起，傳給不在聯絡人裡的人時，可能要輸入「AirDrop 代碼」：接收的人點「取得 AirDrop 代碼」，念給傳送的人輸入（畫面文字須以實機確認）。沒有夥伴時，請種子教師當你的夥伴。</p>
+    </div>
+    <div class="codein"><label for="adin" style="font-weight:700">夥伴的文件編號：</label><input id="adin" inputmode="numeric" maxlength="4" class="wide" aria-label="夥伴的文件編號" autocomplete="off"><button class="btn" id="adok">輸入夥伴的文件編號</button></div>
+    <div class="fb" id="fbad" aria-live="polite"></div>
+    <button class="btn" id="same" hidden>夥伴截圖上的編號真的和我一樣，確認過關</button>
+    <div class="codein"><button class="btn ghost" id="admdm">這台 iPad 找不到 AirDrop／選項是灰色的</button></div>
+    <div class="real" id="mdmbox" hidden>
+      <span class="tag">可能是學校的管理限制</span>
+      <p>教育局統一管理的 iPad，可能把 AirDrop 關閉了，這不是你操作錯誤。請依序檢查：</p>
+      <ol class="olist"><li>Wi-Fi 和藍牙都是開啟的。</li><li>個人熱點是關閉的。</li><li>設定 › 一般 › AirDrop 還是灰色、點不動，或整個項目不見了。</li></ol>
+      <button class="check" id="mdmchk" aria-pressed="${!!a.mdm}"><i></i>我檢查過了，也把 iPad 編號告訴種子教師</button>
+      <button class="btn" id="mdmpass" ${a.mdm?'':'disabled'}>用替代方式過關</button>
+    </div>
+  </div>`;
+  const fbs = $('#fbs'), fbad = $('#fbad');
+  const re = () => LV[4](body, st);
+  $$('[data-side]', body).forEach(b => b.addEventListener('click', () => {
+    const k = b.dataset.side;
+    if(k==='general'){ a.view = 'general'; save(); re(); return; }
+    say(fbs, {
+      wifi:'Wi-Fi 要保持開啟，AirDrop 需要 Wi-Fi 和藍牙才能傳送。AirDrop 不在這裡喔。',
+      bt:'藍牙也要保持開啟。AirDrop 的設定不在這裡，試試「一般」。',
+      cc:'控制中心也能開 AirDrop（按住連線區塊），但這次請從「一般」裡找。',
+      display:'這是調亮度和文字大小的地方，AirDrop 不在這裡。'}[k], 'info');
+  }));
+  $$('[data-gi]', body).forEach(b => b.addEventListener('click', () => {
+    const k = b.dataset.gi;
+    if(k==='airdrop'){ a.view = 'airdrop'; save(); re(); return; }
+    say(fbs, {
+      about:'這裡可以看 iPad 的名稱，AirDrop 傳送時對方看到的就是這個名字。',
+      update:'軟體更新由學校統一管理，請不要自行更新。',
+      airplay:'AirPlay 是把畫面投到電視或投影機，不是 AirDrop。',
+      kb:'鍵盤設定在第五關會用到。這次要找的是 AirDrop。',
+      known:'iPadOS 26.2 起的新功能，可以看到用代碼配對過的人（30 天內有效）。這次用不到。'}[k], 'info');
+  }));
+  const bk = $('[data-back]', body); bk && bk.addEventListener('click', () => { a.view = 'general'; save(); re(); });
+  $$('[data-mode]', body).forEach(b => b.addEventListener('click', () => {
+    const k = b.dataset.mode; a.mode = k; save(); re();
+    if(k === 'all') say($('#fbs'), 'AirDrop 傳送門打開了！接下來 10 分鐘，附近的 iPad 都能傳東西給你。', 'ok');
+    else say($('#fbs'), k === 'off' ? '「關閉接收」時，別人完全傳不進來。' : '「僅限聯絡人」只收得到通訊錄裡的人。研習夥伴多半不在你的聯絡人裡，請改選「所有人（10 分鐘）」。', 'info');
+  }));
+  if(!open) return;
+  $('#adok').addEventListener('click', () => {
+    const v = $('#adin').value.replace(/\D/g, '');
+    if(!v) return say(fbad, '請輸入夥伴截圖最上方的 4 位數「文件編號」。', 'info');
+    if(v === a.code){ say(fbad, '這是你自己的文件編號。請輸入夥伴傳給你的那張截圖上的號碼。如果夥伴截圖上的編號真的和你一樣，點下面的按鈕。'); $('#same').hidden = false; return; }
+    if(AD_CODES.includes(v)) return award(4);
+    say(fbad, '再試一次！這組號碼不是文件編號。打開夥伴傳來的截圖，看最上方「文件編號」的 4 位數字。');
+  });
+  $('#same').addEventListener('click', () => award(4));
+  $('#admdm').addEventListener('click', () => { $('#mdmbox').hidden = false; $('#mdmbox').scrollIntoView({behavior:'smooth', block:'center'}); });
+  $('#mdmchk').addEventListener('click', e => { a.mdm = !a.mdm; save(); e.currentTarget.setAttribute('aria-pressed', a.mdm); $('#mdmpass').disabled = !a.mdm; });
+  $('#mdmpass').addEventListener('click', () => award(4));
+};
+
+/* ---------- Level 5 ---------- */
+const TARGET = '科技讓教學更有趣';
+const norm = s => s.replace(/[\s\p{P}\p{S}]/gu, '').replace(/让/g,'讓').replace(/学/g,'學').replace(/技術/g,'技');
+function micFigure(){
+  return `<div class="micfig">
+    <figure>
+      <svg viewBox="0 0 320 200" role="img" aria-label="iPad 橫放示意圖，標示麥克風收音的位置">
+        <rect x="24" y="34" width="272" height="150" rx="16" fill="#2a3a44"/>
+        <rect x="34" y="44" width="252" height="130" rx="8" fill="#e3efec"/>
+        <circle cx="160" cy="39" r="3.2" fill="#0b1418"/>
+        <circle class="pulse" cx="160" cy="34" r="16" fill="none" stroke="#f28c38" stroke-width="3"/>
+        <text x="160" y="110" text-anchor="middle" font-size="15" font-weight="700" fill="#16323a" font-family="sans-serif">對著上緣說話</text>
+        <text x="160" y="132" text-anchor="middle" font-size="12" fill="#4a6670" font-family="sans-serif">手和皮套不要擋住上緣</text>
+      </svg>
+      <figcaption><b>收音的麥克風在機身上</b>iPad（A16）有兩個麥克風收音孔。橫放時對著前置相機那一側的上緣說話最清楚。位置為示意，請對照手上的 iPad 找機身邊緣的小孔。</figcaption>
+    </figure>
+    <figure>
+      <svg viewBox="0 0 320 200" role="img" aria-label="iPad 鍵盤示意圖，標示麥克風鍵">
+        <rect x="10" y="40" width="300" height="150" rx="12" fill="#d5dce0"/>
+        ${[0,1,2].map(r => Array.from({length:10-r}, (_,i) => `<rect x="${22 + r*14 + i*28}" y="${54 + r*34}" width="24" height="28" rx="4" fill="#fff"/>`).join('')).join('')}
+        <rect x="22" y="156" width="36" height="26" rx="4" fill="#b9c3c9"/>
+        <rect x="64" y="156" width="34" height="26" rx="4" fill="#fff"/>
+        <path d="M81 161a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0v-6a4 4 0 0 1 4-4zM74 170a7 7 0 0 0 14 0M81 177v3" stroke="#16323a" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <circle class="pulse" cx="81" cy="169" r="22" fill="none" stroke="#c7432f" stroke-width="3"/>
+        <rect x="104" y="156" width="150" height="26" rx="4" fill="#fff"/>
+        <text x="179" y="174" text-anchor="middle" font-size="11" fill="#6b7c88" font-family="sans-serif">空白鍵</text>
+        <text x="160" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#16323a" font-family="sans-serif">點鍵盤上的麥克風鍵開始聽寫</text>
+      </svg>
+      <figcaption><b>鍵盤上的麥克風鍵</b>點一下開始聽寫，說完再點一次結束。麥克風鍵的位置可能因鍵盤樣式不同，請在下排找。</figcaption>
+    </figure>
+  </div>`;
+}
+LV[5] = (body, st) => {
+  body.innerHTML = `${doneBanner(5)}<div class="two">
+    <div class="card panel">
+      <div class="step ${st.s1?'done':''}"><span class="n">1</span><h3>聲音咒語</h3></div>
+      ${st.s1 ? '<div class="done-banner">聲音封印已解除！</div>' : `
+      <p>點下面的輸入框，再點 iPad 鍵盤上的<strong>麥克風鍵</strong>，對著 iPad 說出：</p>
+      <p class="spell">科技讓教學更有趣</p>
+      ${micFigure()}
+      <div class="dict"><input type="text" id="spell" lang="zh-Hant-TW" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="點這裡，再點鍵盤上的麥克風" aria-label="語音輸入咒語"></div>
+      <div class="codein"><button class="btn" id="ok5">送出咒語</button><button class="btn ghost" id="nomic">聽寫用不了？</button></div>
+      <div id="diff"></div>
+      <div class="path" id="mic" hidden>開啟方式：設定 › 一般 › 鍵盤 › 啟用聽寫。<br>若選項無法開啟，可能是學校管理限制，直接用鍵盤打字或手寫輸入也算過關。</div>`}
+      <div class="fb" id="fb1" aria-live="polite"></div>
+    </div>
+    <div class="card panel">
+      <div class="step ${st.s2?'done':''}"><span class="n">2</span><h3>筆的封印</h3></div>
+      ${!st.s1 ? '<p class="muted">先完成聲音咒語，畫板才會開啟。</p>' : st.s2 ? '<div class="done-banner">筆的封印已解除！</div><button class="btn big" id="fin5">取得創作之鑰</button>' : `
+      <p>用學校的觸控筆在畫板上寫下 <strong style="font-size:22px">AI</strong>（也可以用手指）。</p>
+      <figure class="penfig">
+        <svg viewBox="0 0 520 150" role="img" aria-label="觸控筆示意圖：輕點筆頭兩下開關電源">
+          <path d="M40 75 L92 58 L92 92 Z" fill="#9aa8b0"/>
+          <circle cx="36" cy="75" r="4" fill="#2a3a44"/>
+          <rect x="90" y="52" width="350" height="46" rx="22" fill="#e9eef0" stroke="#8a99a3" stroke-width="2"/>
+          <rect x="220" y="64" width="90" height="22" rx="5" fill="#e0a91c"/>
+          <text x="265" y="80" text-anchor="middle" font-size="12" font-weight="700" fill="#16323a" font-family="sans-serif">筆的編號</text>
+          <circle cx="400" cy="75" r="5" fill="#52c27a"/>
+          <rect x="436" y="54" width="34" height="42" rx="16" fill="#f28c38"/>
+          <circle class="pulse" cx="456" cy="75" r="34" fill="none" stroke="#f28c38" stroke-width="3"/>
+          <g fill="#c7432f"><circle cx="492" cy="34" r="6"/><circle cx="506" cy="48" r="6"/></g>
+          <text x="456" y="136" text-anchor="middle" font-size="15" font-weight="700" fill="#a8520f" font-family="sans-serif">筆頭：輕點兩下</text>
+          <text x="400" y="30" text-anchor="middle" font-size="12" fill="#4a6670" font-family="sans-serif">指示燈</text>
+          <path d="M400 34 L400 66" stroke="#8a99a3" stroke-width="1.5"/>
+          <text x="40" y="128" text-anchor="middle" font-size="13" font-weight="700" fill="#4a6670" font-family="sans-serif">筆尖（寫字）</text>
+        </svg>
+        <figcaption><b>先開機：用手指輕點觸控筆頭兩下</b>就能開啟電源，指示燈會亮起；用完再點兩下關閉，節省電力。寫字是用另一端的筆尖。圖為示意，請對照學校的觸控筆。</figcaption>
+      </figure>
+      <div class="tools">
+        ${['#16323a','#c7432f','#3b82c4','#3aa57a'].map((c,i)=>`<button class="sw" data-c="${c}" style="background:${c}" aria-label="顏色 ${i+1}" aria-pressed="${i===0}"></button>`).join('')}
+        <button class="chip sz" data-s="4" aria-pressed="true">細</button><button class="chip sz" data-s="10" aria-pressed="false">粗</button>
+        <button class="chip" id="clr">清除</button>
+      </div>
+      <canvas class="board" id="board" aria-label="手寫畫板"></canvas>
+      <button class="btn" id="done5" disabled>完成</button>
+      <p class="note">網頁無法辨識寫了什麼字，請自己確認寫的是 AI，也可以給種子教師看。</p>`}
+      <div class="fb" id="fb2" aria-live="polite"></div>
+    </div></div>`;
+  const fb1 = $('#fb1'), fb2 = $('#fb2');
+  if(!st.s1){
+    $('#nomic').addEventListener('click', () => { $('#mic').hidden = false; });
+    $('#ok5').addEventListener('click', () => {
+      const raw = $('#spell').value, v = norm(raw);
+      if(!v) return say(fb1, '輸入框還是空的。點輸入框後，再點鍵盤上的麥克風說話。', 'info');
+      if(v === TARGET){ st.s1 = true; save(); say(fb1, '咒語正確！', 'ok'); setTimeout(()=>LV[5](body, st), 1000); return; }
+      const chars = [...TARGET].map((c,i) => v[i] === c ? c : `<span class="x">${c}</span>`).join('');
+      $('#diff').innerHTML = `<p class="note">畫底線的字和咒語不一樣，可以點進輸入框修改：</p><p class="diff">${chars}</p>`;
+      say(fb1, `再試一次！你輸入的是「${raw.trim()}」。對著 iPad 上緣說話、放慢速度，也可以直接修改錯字。`);
+    });
+  } else if(!st.s2){
+    const cv = $('#board'), ctx = cv.getContext('2d');
+    const fit = () => { const r = cv.getBoundingClientRect(), d = window.devicePixelRatio || 1; cv.width = r.width*d; cv.height = r.height*d; ctx.setTransform(d,0,0,d,0,0); ctx.lineCap='round'; ctx.lineJoin='round'; };
+    fit();
+    let color = '#16323a', size = 4, drawing = false, last = null, strokes = 0, len = 0;
+    const done = $('#done5');
+    $$('.sw', body).forEach(b => b.addEventListener('click', () => { color = b.dataset.c; $$('.sw', body).forEach(x => x.setAttribute('aria-pressed', x===b)); }));
+    $$('.sz', body).forEach(b => b.addEventListener('click', () => { size = +b.dataset.s; $$('.sz', body).forEach(x => x.setAttribute('aria-pressed', x===b)); }));
+    $('#clr').addEventListener('click', () => { ctx.clearRect(0,0,cv.width,cv.height); strokes = 0; len = 0; done.disabled = true; });
+    const pos = e => { const r = cv.getBoundingClientRect(); return {x:e.clientX-r.left, y:e.clientY-r.top}; };
+    cv.addEventListener('pointerdown', e => { e.preventDefault(); drawing = true; last = pos(e); strokes++; try{cv.setPointerCapture(e.pointerId)}catch(_){} ctx.beginPath(); ctx.fillStyle=color; ctx.arc(last.x,last.y,size/2,0,Math.PI*2); ctx.fill(); });
+    cv.addEventListener('pointermove', e => {
+      if(!drawing) return;
+      const evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
+      evs.forEach(ev => { const p = pos(ev); ctx.strokeStyle = color; ctx.lineWidth = size; ctx.beginPath(); ctx.moveTo(last.x,last.y); ctx.lineTo(p.x,p.y); ctx.stroke(); len += Math.hypot(p.x-last.x,p.y-last.y); last = p; });
+      done.disabled = !(strokes >= 2 && len > 160);
+    });
+    const end = () => { drawing = false; done.disabled = !(strokes >= 2 && len > 160); };
+    cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+    done.addEventListener('click', () => { st.s2 = true; save(); say(fb2, '封印解除！', 'ok'); setTimeout(()=>LV[5](body, st), 900); });
+  } else {
+    $('#fin5').addEventListener('click', () => award(5));
+  }
+};
+
+/* ---------- teaching library (in-game view) ---------- */
+const FRAMED = (() => { try { return window.self !== window.top; } catch(e) { return true; } })();
+const LIB_HTML = `
+  <article><span class="ltag">截圖＋標示</span><h3>把板書變成課後講義</h3>
+    <p>下課前把黑板或簡報畫面截圖，用觸控筆圈出今天的三個重點，再存到照片。下次上課開頭先秀出這張圖，學生一眼就能接上進度。</p>
+    <ol><li>同時快按頂端按鈕與音量鍵截圖。</li><li>點左下角縮圖，選筆和顏色圈出重點。</li><li>點「完成」，儲存到照片。</li></ol></article>
+  <article><span class="ltag">語音輸入</span><h3>三分鐘寫完學習回饋</h3>
+    <p>巡堂時看到學生的亮點，點開備忘錄，按鍵盤上的麥克風說一句話就記下來。回到座位再整理，比事後回想快得多。說「逗號」「句號」可以加上標點，辨識效果以實機為準。</p></article>
+  <article><span class="ltag">相機紀錄</span><h3>學習歷程這樣拍</h3>
+    <p>拍學習單、實驗過程或分組作品時，iPad 橫放、手指避開背面鏡頭。拍完用「編輯」裡的裁切留下重點範圍。拍攝學生前請留意肖像權，照片依學校規定保存。</p></article>
+  <article class="lfile"><span class="lstamp">特務限定</span><span class="ltag">特務檔案</span><h3>特務檔案：金鑰排列順序</h3>
+    <p>數位校園核心的密碼鎖，要依照下面的口訣排列五把金鑰的數字：</p>
+    <p class="lpoem">先開控制室，再接上電力；<br>創作完成後，影像才顯現；<br>手勢走最後，大門就打開。</p>
+    <p class="lnote">任務：把這一段截圖，用觸控筆圈出排列順序，再回到遊戲輸入密碼。</p></article>`;
+function openLibrary(){
+  layer.innerHTML = `<div class="libview" role="dialog" aria-modal="true" aria-label="教學資料館">
+    <div class="libbar"><span class="url">${svg('lock')}油廠國小教學資料館</span><button class="btn dark" id="libclose">回到遊戲</button></div>
+    <div class="libbody"><div class="libinner"><p class="lkicker">油廠國小 iPad 研習｜第六關</p><h2>教學資料館</h2>
+      <p class="lnote">往下捲動，找到「特務檔案」那一段。看完後點右上角「回到遊戲」。</p>${LIB_HTML}
+      <button class="btn dark" id="libclose2">回到遊戲</button></div></div></div>`;
+  const close = () => { layer.innerHTML = ''; };
+  $('#libclose', layer).addEventListener('click', close);
+  $('#libclose2', layer).addEventListener('click', close);
+}
+
+/* ---------- Level 6 ---------- */
+LV[6] = (body, st) => {
+  st.c = st.c || [false,false]; st.note = st.note || '';
+  const order = [3,1,5,4,2];
+  body.innerHTML = `${doneBanner(6)}<div class="two">
+    <div class="card panel">
+      <div class="step"><span class="n">1</span><h3>到教學資料館找線索</h3></div>
+      ${FRAMED ? `<button class="linkcard" id="lib">${svg('ext')}開啟教學資料館</button>
+      <p class="note">資料館會打開在遊戲畫面上方。看完後，點右上角的「回到遊戲」。</p>`
+      : `<a class="linkcard" href="library.html" target="_blank" rel="noopener" id="lib">${svg('ext')}開啟教學資料館</a>
+      <p class="note">資料館會在 Safari 新分頁打開。看完後，點 Safari 上方的遊戲分頁回到這裡。</p>
+      <button class="btn ghost" id="libin">連結打不開？在遊戲內開啟資料館</button>`}
+      <div class="real"><span class="tag">在你手上的 iPad 完成</span>
+        <button class="check" data-c="0" aria-pressed="${st.c[0]}"><i></i>在資料館找到「特務檔案」那一段</button>
+        <button class="check" data-c="1" aria-pressed="${st.c[1]}"><i></i>截圖那一段，用觸控筆圈出排列順序並儲存</button>
+      </div>
+      <div class="field"><label for="note6">用語音輸入一句今天的心得（至少 6 個字）</label>
+        <textarea id="note6" lang="zh-Hant-TW" placeholder="點這裡，再點鍵盤上的麥克風說話">${esc(st.note)}</textarea></div>
+    </div>
+    <div class="card panel">
+      <div class="step"><span class="n">2</span><h3>輸入最終密碼</h3></div>
+      <p class="muted">金鑰背包裡的五個數字：</p>
+      <div class="pack">${[1,2,3,4,5].map(n => `<div class="kslot">${keySvg(L[n].hex)}<div><small>${L[n].key}</small><b>${L[n].digit}</b></div></div>`).join('')}</div>
+      <p>依照特務檔案的順序，把數字填進密碼鎖：</p>
+      <div class="lockrow">${[0,1,2,3,4].map(i=>`<label>第 ${i+1} 位<input inputmode="numeric" maxlength="1" data-i="${i}" aria-label="第 ${i+1} 位" autocomplete="off"></label>`).join('')}</div>
+      <button class="btn big" id="ok6">解鎖數位校園核心</button>
+      <div class="fb" id="fb" aria-live="polite"></div>
+    </div></div>`;
+  const fb = $('#fb');
+  if(FRAMED) $('#lib').addEventListener('click', openLibrary);
+  const li = $('#libin'); li && li.addEventListener('click', openLibrary);
+  $$('[data-c]', body).forEach(c => c.addEventListener('click', () => { const i=+c.dataset.c; st.c[i]=!st.c[i]; save(); c.setAttribute('aria-pressed', st.c[i]); }));
+  $('#note6').addEventListener('input', e => { st.note = e.target.value; save(); });
+  const ins = $$('.lockrow input', body);
+  ins.forEach((inp,i) => {
+    inp.addEventListener('input', () => { inp.value = inp.value.replace(/\D/g,'').slice(-1); if(inp.value && ins[i+1]) ins[i+1].focus(); });
+    inp.addEventListener('keydown', e => { if(e.key==='Backspace' && !inp.value && ins[i-1]) ins[i-1].focus(); });
+  });
+  $('#ok6').addEventListener('click', () => {
+    const code = ins.map(x => x.value).join('');
+    if(!(st.c[0] && st.c[1])) return say(fb, '先完成左邊的兩項 iPad 任務（找到特務檔案、截圖並圈出順序）再打勾。', 'info');
+    if(st.note.replace(/\s/g,'').length < 6) return say(fb, '心得還不到 6 個字。點心得欄，再點鍵盤上的麥克風說一句話。', 'info');
+    if(code.length < 5) return say(fb, '密碼鎖有五格，每一格都要填一個數字。', 'info');
+    if(code === order.map(n => L[n].digit).join('')) return award(6);
+    const have = [4,7,2,9,5];
+    if([...code].some(d => !have.includes(+d))) return say(fb, '再試一次！有數字不在金鑰上，對照上面五把金鑰的數字。');
+    if([...code].sort().join('') === have.slice().sort().join('')) return say(fb, '五個數字都對了！順序不對，再讀一次特務檔案的口訣。');
+    say(fb, '再試一次！每把金鑰的數字各用一次，順序請看資料館的特務檔案。');
+  });
+};
+
+/* ---------- certificate ---------- */
+function rocDate(iso){ const d = iso ? new Date(iso) : new Date(); return `中華民國 ${d.getFullYear()-1911} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日`; }
+async function drawCert(){
+  try{ await document.fonts.ready; }catch(e){}
+  const W = 1600, H = 1130, c = document.createElement('canvas'); c.width = W; c.height = H;
+  const x = c.getContext('2d');
+  const disp = '"Chiron GoRound TC","PingFang TC","Noto Sans TC",sans-serif', bodyF = '"Noto Sans TC","PingFang TC",sans-serif';
+  x.fillStyle = '#f1f6f4'; x.fillRect(0,0,W,H);
+  x.fillStyle = '#0f4c4a'; x.fillRect(0,0,W,H);
+  x.fillStyle = '#ffffff'; rr(x, 40, 40, W-80, H-80, 36); x.fill();
+  x.strokeStyle = '#f28c38'; x.lineWidth = 6; rr(x, 70, 70, W-140, H-140, 26); x.stroke();
+  x.textAlign = 'center'; x.fillStyle = '#a8520f'; x.font = `700 34px ${bodyF}`; x.fillText('高雄市楠梓區油廠國民小學', W/2, 170);
+  x.fillStyle = '#0f4c4a'; x.font = `900 88px ${disp}`; x.fillText('數位教學特務證書', W/2, 285);
+  x.fillStyle = '#16323a'; x.font = `700 44px ${bodyF}`; x.fillText(`${S.grade}`, W/2, 375);
+  x.font = `900 96px ${disp}`; x.fillText(`${S.name}　老師`, W/2, 490);
+  x.fillStyle = '#4a6670'; x.font = `500 36px ${bodyF}`;
+  x.fillText('完成《數位校園大逃脫：消失的教學金鑰》六大挑戰，', W/2, 580);
+  x.fillText('成功找回六把教學金鑰，重新啟動數位校園系統。', W/2, 632);
+  x.fillText('特頒此證，表彰你成為油廠國小數位教學特務！', W/2, 684);
+  const cols = L.slice(1);
+  cols.forEach((l,i) => {
+    const cx = W/2 + (i - 2.5) * 200, cy = 790;
+    x.save(); x.translate(cx - 80, cy - 70); x.scale(2.5, 2.5); drawKey(x, l.hex); x.restore();
+    x.fillStyle = '#16323a'; x.font = `700 26px ${bodyF}`; x.fillText(l.key, cx, cy + 82);
+  });
+  x.fillStyle = '#4a6670'; x.font = `500 32px ${bodyF}`; x.fillText(rocDate(S.finishedAt), W/2, 1000);
+  return c;
+  function rr(g, x0, y0, w, h, r){ g.beginPath(); g.moveTo(x0+r,y0); g.arcTo(x0+w,y0,x0+w,y0+h,r); g.arcTo(x0+w,y0+h,x0,y0+h,r); g.arcTo(x0,y0+h,x0,y0,r); g.arcTo(x0,y0,x0+w,y0,r); g.closePath(); }
+  function drawKey(g, col){ g.fillStyle = col; g.beginPath(); g.arc(20,32,13,0,Math.PI*2); g.fill(); g.fillStyle='#fff'; g.beginPath(); g.arc(20,32,5.5,0,Math.PI*2); g.fill(); g.fillStyle=col; g.fillRect(31,28,28,8); g.fillRect(47,34,6,10); g.fillRect(39,34,5,7); }
+}
+function renderCert(){
+  document.body.style.background = '';
+  app.innerHTML = header() + `<main><div class="wrap"><div class="card certbox">
+    <p class="eyebrow">任務完成</p><h2 style="font-size:32px">恭喜你！數位校園系統已成功重新啟動！</h2>
+    <p class="muted">你已成為油廠國小數位教學特務！</p>
+    <img id="certimg" alt="油廠國小數位教學特務證書" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=">
+    <div class="codein" style="justify-content:center"><button class="btn big" id="dl">下載證書 PNG</button><button class="btn ghost big" id="tomap">回到地圖</button></div>
+    <p class="note">若按下載沒有反應，請長按上方的證書圖片，選擇儲存到照片。</p>
+    <div class="fb" id="fb" aria-live="polite"></div>
+  </div></div></main>`;
+  bindHeader();
+  $('#tomap').addEventListener('click', () => { S.screen='map'; save(); render(); });
+  const ready = drawCert().then(c => { $('#certimg').src = c.toDataURL('image/png'); return c; });
+  $('#dl').addEventListener('click', async () => {
+    const c = await ready;
+    c.toBlob(b => {
+      if(!b) return say($('#fb'), '證書產生失敗，請長按圖片儲存。');
+      const u = URL.createObjectURL(b), a = document.createElement('a');
+      a.href = u; a.download = `數位教學特務證書_${S.name}.png`; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(u), 4000);
+    }, 'image/png');
+  });
+}
+
+/* ---------- boot ---------- */
+store.set(S); // probe storage
+render();
+window.__escape = { get state(){ return S; } };
+})();
+</script>
+
+</body>
+</html>
