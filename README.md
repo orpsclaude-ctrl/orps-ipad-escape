@@ -2,12 +2,18 @@
 
 高雄市楠梓區油廠國民小學 iPad 基礎操作研習用的密室逃脫網頁遊戲。純靜態網站，可直接部署到 GitHub Pages，不需要伺服器、帳號或付費服務。
 
+## 網址
+
+- 遊戲：https://orpsclaude-ctrl.github.io/orps-ipad-escape/
+- QR Code：`qrcode.png`（用 iPad 相機掃描即可開啟）
+
 ## 檔案
 
 | 檔案 | 用途 |
 | --- | --- |
 | `index.html` | 遊戲主程式：首頁、特務登記、冒險地圖、六關、證書 |
 | `library.html` | 教學資料館（第六關的線索頁） |
+| `qrcode.png` | 遊戲網址的 QR Code，可列印 |
 
 ## 部署到 GitHub Pages
 
