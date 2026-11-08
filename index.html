@@ -1464,7 +1464,7 @@ async function drawCert(){
   x.textAlign = 'center'; x.fillStyle = '#a8520f'; x.font = `700 34px ${bodyF}`; x.fillText('高雄市楠梓區油廠國民小學', W/2, 170);
   x.fillStyle = '#0f4c4a'; x.font = `900 88px ${disp}`; x.fillText('數位教學特務證書', W/2, 285);
   x.fillStyle = '#16323a'; x.font = `700 44px ${bodyF}`; x.fillText(`${S.grade}`, W/2, 375);
-  x.font = `900 96px ${disp}`; x.fillText(`${S.name}　老師`, W/2, 490);
+  x.font = `900 96px ${disp}`; x.fillText(/(老師|教師|主任|校長|組長)$/.test(S.name) ? S.name : `${S.name}　老師`, W/2, 490);
   x.fillStyle = '#4a6670'; x.font = `500 36px ${bodyF}`;
   x.fillText('完成《數位校園大逃脫：消失的教學金鑰》六大挑戰，', W/2, 580);
   x.fillText('成功找回六把教學金鑰，重新啟動數位校園系統。', W/2, 632);
